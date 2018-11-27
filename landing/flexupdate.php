@@ -72,10 +72,14 @@ if (isset($_POST['sub_location'])){
     }
 }
 
+//UPDATING EXCHANGE RATE
+//if user clicks "update exchange rate" button
 if (isset($_POST['sub_exchangerate'])){
+    //if they didn't provide a value
     if (!isset($_POST['exchangerate'])){
         echo "please input an exchange rate before submitting.";
     }
+    //if they did provide a value
     if (isset($_POST['exchangerate'])){
         $exchange_rate = $_POST['exchangerate'];
         echo "your exchange rate is now ".$exchange_rate;
