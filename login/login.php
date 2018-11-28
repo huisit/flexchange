@@ -71,11 +71,11 @@
 
                  //store data in session variables
                  $_SESSION["loggedin"] = true;
-                 $_SESSION["id"] = $id;
+                 $_SESSION["user_id"] = $id;
                  $_SESSION["email"] = $email;
 
-                 //Redirect to welcome page
-                 header("location: welcome.php");
+                 //Redirect to landing page
+                 header("location: landing.php");
                } else {
                  //display error message
                  $password_err = "The password you entered was not valid.";
@@ -115,9 +115,9 @@
 
   <div class="navbar">
     <ul class="navbarlinks">
-      <li><a href=" ">Home</a></li>
-      <li><a href=" ">Friends</a></li>
-      <li><a href=" "><img src="search.png" width="12px"> Find Flex</a><li>
+      <li><a href="login.php">Home</a></li>
+      <li><a href="login.php">Friends</a></li>
+      <li><a href="login.php"><img src="search.png" width="12px"> Find Flex</a><li>
     </ul>
   </div>
 

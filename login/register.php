@@ -132,9 +132,9 @@
 
   <div class="navbar">
     <ul class="navbarlinks">
-      <li><a href=" ">Home</a></li>
-      <li><a href=" ">Friends</a></li>
-      <li><a href=" "><img src="search.png" width="12px"> Find Flex</a><li>
+      <li><a href="login.php">Home</a></li>
+      <li><a href="login.php">Friends</a></li>
+      <li><a href="login.php"><img src="search.png" width="12px"> Find Flex</a><li>
     </ul>
   </div>
 
