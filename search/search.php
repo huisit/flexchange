@@ -4,13 +4,11 @@ session_start();
 
 if (isset($_POST['search'])){
   $valueToSearch = $_POST['valueToSearch'];
-  $query = "SELECT * FROM user WHERE CONCAT(`FirstName`, `LastName`, `status`) LIKE '%".$valueToSearch."%'";
+  $query = "SELECT `FirstName`, `LastName`, `status`, `location`, `exchange_rate` FROM user WHERE CONCAT(`FirstName`, `LastName`, `status`, `location`) LIKE '%".$valueToSearch."%'";
   $_SESSION['LastSearch'] = $query;
   $search_result = filterTable($query);
-
-
 } else {
-   $query = "SELECT * FROM user";
+   $query = "SELECT `FirstName`, `LastName`, `status`, `location`, `exchange_rate` FROM user";
    $search_result = filterTable($query);
 
 }
@@ -19,10 +17,14 @@ if (isset($_POST['search'])){
 function filterTable($query){
   $con=mysqli_connect("127.0.0.1","root","","flexchange");
   $filter_Result = mysqli_query($con, $query);
+  if (!$filter_Result) {
+    printf("Error: %s\n", mysqli_error($con));
+    exit();
+}
   return $filter_Result;
 }
 
-$orderBy = array('FirstName', 'LastName', 'status');
+$orderBy = array('FirstName', 'LastName', 'status', 'location', 'exchange_rate');
 
 $order = 'type';
 if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
@@ -65,6 +67,8 @@ if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
           <th><a href="?orderBy=FirstName">First Name</a> </th>
           <th><a href="?orderBy=LastName">Last Name</a></th>
           <th><a href="?orderBy=status">Flex Status</a></th>
+          <th><a href="?orderBy=location">Location</a></th>
+          <th><a href="?orderBy=exchange_rate">Exchange Rate ($USD/$FLEX)</a></th>
 
         </tr>
         <?php while($row = mysqli_fetch_array($search_result)):?>
@@ -82,6 +86,8 @@ if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
             echo 'Status Unavailable';
           }
           ?></td>
+          <td><?php echo $row['location']; ?></td>
+          <td><?php echo $row['exchange_rate']; ?></td>
         </tr>
         <?php endwhile;?>
 
