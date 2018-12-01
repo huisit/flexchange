@@ -1,6 +1,6 @@
 <?php
    //connection
-   require_once "connect.php";
+   require_once "backend/connect.php";
 
    //define variables and initialize with empty values
    $email = $password = $confirm_password = $FirstName = $LastName = "";
@@ -8,7 +8,6 @@
 
    //processing form data
    if($_SERVER["REQUEST_METHOD"] == "POST"){
-
 
      //validate first name
      if(empty(trim($_POST["FirstName"]))){
@@ -107,40 +106,28 @@
 
       //Close statement
       mysqli_stmt_close($stmt);
-
     }
 
     //Close connection
     mysqli_close($link);
-
    }
-
  ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
   <title>Sign Up</title>
-  <link rel="stylesheet" href="register_style.css">
+  <link rel="stylesheet" href="style/register_style.css">
+  <?php
+    include("common/head.html");
+  ?>
 </head>
 <body>
+  <?php
+    include("common/header.html");
+  ?>
 
-  <div class="header">
-    <img src="images/flexchangelogo.png" width="150px"/>
-  </div>
-
-  <div class="navbar">
-    <ul class="navbarlinks">
-      <li><a href="login.php">Home</a></li>
-      <li><a href="login.php">Friends</a></li>
-      <li><a href="login.php"><img src="search.png" width="12px"> Find Flex</a><li>
-    </ul>
-  </div>
-
-
-
-  <div class="wrapper">
+  <main>
     <h1>Sign up for FleXchange</h1>
     <p>Please enter your details.</p>
 
@@ -184,6 +171,6 @@
 
       <p>Already have an account? <a href="login.php">Login here</a>.</p>
     </form>
-  </div>
+  </main>
 </body>
 </html>

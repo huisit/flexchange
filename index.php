@@ -1,3 +1,6 @@
+<?php
+  require_once "backend/ensureSession.php";
+?>
 <!DOCTYPE html>
 <html>
   <head>

@@ -4,7 +4,7 @@
 
    //check if user is logged in, if yes, redirect them to welcome page
    if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true){
-     header("Location: landing.php");
+     header("Location: index.php");
      exit;
    }
 
@@ -67,7 +67,7 @@
                  $_SESSION["FirstName"] = $FirstName;
 
                  //Redirect to landing page
-                 header("location: landing.php");
+                 header("location: index.php");
                } else {
                  //display error message
                  $password_err = "The password you entered was not valid.";
@@ -106,7 +106,7 @@
     include("common/header.html");
   ?>
 
-  <div class="wrapper">
+  <main>
     <h1>Login to FleXchange</h1>
     <p>Please enter your RPI email and password to login.</p>
 
@@ -129,6 +129,6 @@
 
       <p>Don't have an account? <a href="register.php">Sign up now</a></p>
     </form>
-  </div>
+  </main>
 </body>
 </html>

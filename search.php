@@ -42,43 +42,48 @@
       include("common/header.html");
     ?>
 
-    <form action="search.php" method="post">
-      <input type="text" name="valueToSearch" placeholder="Search Users" class="form-control"><br>
-      <input type="submit" name="search" value="Search" class="btn"><br><br>
+    <main>
+      <form id="searchForm" action="search.php" method="post">
+        <input id="searchText" type="text" name="valueToSearch" placeholder="Search Users" class="form-control">
+        <input id="searchSubmit" type="submit" name="search" value="Search" class="btn"><br><br>
+      </form>
 
-      <table>
-        <tr>
-          <th class="firstname"><a href="?orderBy=FirstName">First Name</a> </th>
-          <th class="lastname"><a href="?orderBy=LastName">Last Name</a></th>
-          <th class="status"><a href="?orderBy=status">Flex Status</a></th>
-          <th class="location"><a href="?orderBy=location">Location</a></th>
-          <th class="rate"><a href="?orderBy=exchange_rate">Exchange Rate ($USD/$FLEX)</a></th>
-
-        </tr>
-        <?php
+      <?php
+        if ($stmt->rowCount() > 0) {
+          echo "
+            <table>
+              <tr>
+                <th class='firstname'><a href='?orderBy=FirstName'>First Name</a></th>
+                <th class='lastname'><a href='?orderBy=LastName'>Last Name</a></th>
+                <th class='status'><a href='?orderBy=status'>Flex Status</a></th>
+                <th class='location'><a href='?orderBy=location'>Location</a></th>
+                <th class='rate'><a href='?orderBy=exchange_rate'>\$USD/\$FLEX</a></th>
+              </tr>
+          ";
           while($row = $stmt->fetch()) {
             $status = "";
             if ($row['status'] == 0){
               $status = 'Flexing';
-            }
-            else if ($row['status'] == 1){
+            } else if ($row['status'] == 1){
               $status = 'Offline';
-            }
-            else{
+            } else {
               $status = 'Status Unavailable';
             }
-            $htmlString = "
+            echo "
               <tr>
                 <td>" . $row['FirstName'] . "</td>
                 <td>" . $row['LastName'] . "</td>
                 <td>" . $status . "</td>
                 <td>" . $row['location'] . "</td>
                 <td>" . $row['exchange_rate'] . "</td>
-              </tr>";
-            echo $htmlString;
+              </tr>
+            ";
           }
-        ?>
-      </table>
-    </form>
+          echo "</table>";
+        } else {
+          echo "No Results";
+        }
+      ?>
+    </main>
   </body>
 </html>
