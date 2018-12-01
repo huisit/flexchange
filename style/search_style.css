@@ -30,14 +30,23 @@ ul {
 }
 
 li {
-  float: left;
 }
 
 li a {
+   float: left;
   display: block;
   color: #842D29;
   text-align: center;
   padding: 14px 18px;
+  text-decoration: none;
+}
+
+li a.logout {
+  display: block;
+  color: #842D29;
+  text-align: center;
+  padding: 14px 18px;
+  float: right;
   text-decoration: none;
 }
 
