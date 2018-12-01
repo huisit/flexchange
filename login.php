@@ -28,18 +28,6 @@ if (isset($_POST['login']) && $_POST['login'] == 'Login') {
   }
 }
 
-// Logout
-if (isset($_SESSION['email']) && isset($_POST['logout']) && $_POST['logout'] == 'Logout') {
-  // Unset the keys from the superglobal
-  unset($_SESSION['email']);
-  unset($_SESSION['user_id']);
-  // Destroy the session cookie for this session
-  setcookie(session_name(), '', time() - 72000);
-  // Destroy the session data store
-  session_destroy();
-  $err = 'You have been logged out.';
-}
-
 
 ?>
 <!doctype html>
@@ -57,10 +45,7 @@ if (isset($_SESSION['email']) && isset($_POST['logout']) && $_POST['logout'] == 
           include("common/header.php");
         ?>
   <?php if (isset($_SESSION['email'])): ?>
-
-        <form method="post" action="logout.php">
-          <input name="logout" type="submit" value="Logout" />
-        </form>
+  <?php header("Location: index.php"); ?>
 
   <?php else: ?>
   <h1>Login</h1>
