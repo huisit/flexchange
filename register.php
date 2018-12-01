@@ -1,12 +1,12 @@
 <?php
   session_start();
-  
+
   // Connect to the database
   require_once "backend/connect.php";
-  $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
-  
+  $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
   if (isset($_POST['register']) && $_POST['register'] == 'Register') {
-    
+
     // @TODO: Check to see if duplicate emails exist
 
     //first check to see if we've already got that email
@@ -16,14 +16,14 @@
     $prep->execute();
     $check = $prep->fetch(PDO::FETCH_ASSOC);
 
-    //if we haven't already got the email, set a bool to 
+    //if we haven't already got the email, set a bool to
     if (!$check){
       $email_exists = FALSE;
     }
     else{
       $email_exists = TRUE;
     }
-    
+
     //Check for any empty input fields
     if (!isset($_POST['firstname']) || !isset($_POST['lastname']) || !isset($_POST['email']) || !isset($_POST['pass']) || !isset($_POST['passconfirm']) || empty($_POST['email']) || empty($_POST['pass']) || empty($_POST['passconfirm'])) {
       $msg = "Please fill in all form fields.";
@@ -37,26 +37,22 @@
     }
     else {
       // Generate random salt
-      $salt = hash('sha256', uniqid(mt_rand(), true));      
+      $salt = hash('sha256', uniqid(mt_rand(), true));
 
       // Apply salt before hashing
       $salted = hash('sha256', $salt . $_POST['pass']);
-      
+
       // Store the salt with the password, so we can apply it again and check the result
       $stmt = $dbh->prepare("INSERT INTO user (email, pass_hash, pass_salt, FirstName, LastName) VALUES (:email, :pass, :salt, :firstname, :lastname)");
       $stmt->execute(array(':email' => $_POST['email'], ':pass' => $salted, ':salt' => $salt, ':firstname'=>$_POST['firstname'], ':lastname'=>$_POST['lastname']));
       $msg = "Account created.";
     }
-  } 
+  }
 ?>
 <!doctype html>
 <html>
 <head>
-<<<<<<< HEAD
   <title>Sign Up</title>
-=======
-  <title>Lecture 18 Registration</title>
->>>>>>> 795993dcbec04f28392c0facfbe72ffd749d6b63
   <?php
     include("common/head.html");
   ?>
