@@ -3,13 +3,13 @@
   <head>
     <title>Flexchange</title>
     <?php
-      include("head.html");
+      include("common/head.html");
     ?>
   </head>
 
   <body>
     <?php
-      include("header.html");
+      include("common/header.html");
     ?>
     <div>
       <h1 style="color: #832E2B; margin: 50px">Welcome back, <?php echo $_SESSION['FirstName']?></h1>

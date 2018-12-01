@@ -4,12 +4,12 @@
 
    //check if user is logged in, if yes, redirect them to welcome page
    if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true){
-     header("location: landing.php");
+     header("Location: landing.php");
      exit;
    }
 
    //include connection file
-   require_once "connect.php";
+   require_once "backend/connect.php";
 
    //define variables & init
    $email = $password = $FirstName = "";
@@ -94,23 +94,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
   <title>Login</title>
+  <?php
+    include("common/head.html");
+  ?>
   <link rel="stylesheet" href="register_style.css">
 </head>
 
 <body>
-
-  <div class="header">
-    <img src="flexchangelogo.png" width="150px"/>
-  </div>
-
-  <div class="navbar">
-    <ul class="navbarlinks">
-      <li><a href="login.php">Home</a></li>
-      <li><a href="login.php"><img src="search.png" width="12px"> Find Flex</a><li>
-    </ul>
-  </div>
+  <?php
+    include("common/header.html");
+  ?>
 
   <div class="wrapper">
     <h1>Login to FleXchange</h1>

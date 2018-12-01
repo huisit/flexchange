@@ -5,7 +5,7 @@
   if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true) {
     $id = $_SESSION["id"];
   } else {
-    header("location: login.php");
+    header("Location: login.php");
     exit;
   }
   //ensure an id was found
@@ -13,7 +13,7 @@
     die("User ID could not be found");
   }
   //connect to the database
-  require_once "connect.php";
+  require_once "backend/connect.php";
 
   $stmt = $pdo->prepare("SELECT FirstName, LastName, email FROM users WHERE user_id = :id");
   $stmt->execute(['id' => $id]);
@@ -28,13 +28,13 @@
 <html>
   <head>
     <?php
-      include("head.html")
+      include("common/head.html")
      ?>
     <link rel="stylesheet" type="text/css" href="profile_style.css"></link>
   </head>
   <body>
     <?php
-      include("header.html");
+      include("common/header.html");
     ?>
     <div class="vcard">
       <header class="mediaBox">
