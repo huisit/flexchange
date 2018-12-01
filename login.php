@@ -6,7 +6,7 @@ require_once "backend/connect.php";
 
 // Check login
 if (isset($_POST['login']) && $_POST['login'] == 'Login') {
-  
+
   $salt_stmt = $dbh->prepare('SELECT pass_salt FROM user WHERE email=:email');
   $salt_stmt->execute(array(':email' => $_POST['email']));
   $res = $salt_stmt->fetch();
@@ -14,11 +14,11 @@ if (isset($_POST['login']) && $_POST['login'] == 'Login') {
   $salted = hash('sha256', $salt . $_POST['pass']);
 
 
-  
+
   $login_stmt = $dbh->prepare('SELECT email, user_id FROM user WHERE email=:email AND pass_hash=:pass');
   $login_stmt->execute(array(':email' => $_POST['email'], ':pass' => $salted));
-  
-  
+
+
   if ($user = $login_stmt->fetch()) {
     $_SESSION['email'] = $user['email'];
     $_SESSION['user_id'] = $user['user_id'];
@@ -34,15 +34,11 @@ if (isset($_POST['login']) && $_POST['login'] == 'Login') {
 <html>
 <head>
   <title>Login</title>
-  <link rel="shortcut icon" href="">  
+  <link rel="shortcut icon" href="">
   <?php
     include("common/head.html");
   ?>
-<<<<<<< HEAD
   <link rel="stylesheet" href="style/style.css">
-=======
-  <link rel="stylesheet" type="text/css" href="register_style.css">
->>>>>>> 795993dcbec04f28392c0facfbe72ffd749d6b63
 </head>
 <body>
         <?php
