@@ -1,5 +1,5 @@
 <?php
-  require "backend/connect.php"
+  require "backend/connect.php";
 
   //UPDATE USER STATUS AS "FLEXING" OR "OFFLINE"
   //if 'update status' button was clicked:

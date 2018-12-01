@@ -98,7 +98,7 @@
   <?php
     include("common/head.html");
   ?>
-  <link rel="stylesheet" href="register_style.css">
+  <link rel="stylesheet" href="style/register_style.css">
 </head>
 
 <body>
@@ -127,7 +127,7 @@
         <input type="submit" class="btn" value="LOGIN">
       </div>
 
-      <p>Don't have an account? <a href="register.php">Sign up now</a>.</p>
+      <p>Don't have an account? <a href="register.php">Sign up now</a></p>
     </form>
   </div>
 </body>

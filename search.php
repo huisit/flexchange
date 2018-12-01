@@ -1,37 +1,30 @@
 <?php
-session_start();
+  session_start();
 
-if (isset($_POST['search'])){
-  $valueToSearch = $_POST['valueToSearch'];
-  $query = "SELECT `FirstName`, `LastName`, `status`, `location`, `exchange_rate` FROM user WHERE CONCAT(`FirstName`, `LastName`, `status`, `location`) LIKE '%".$valueToSearch."%'";
-  $_SESSION['LastSearch'] = $query;
-  $search_result = filterTable($query);
-} else {
-   $query = "SELECT `FirstName`, `LastName`, `status`, `location`, `exchange_rate` FROM user";
-   $search_result = filterTable($query);
-}
+  require "backend/connect.php";
 
-function filterTable($query) {
-  $con=mysqli_connect("127.0.0.1","root","","flexchange");
-  $filter_Result = mysqli_query($con, $query);
-  if (!$filter_Result) {
-    printf("Error: %s\n", mysqli_error($con));
-    exit();
+  if (isset($_POST['search'])){
+    $valueToSearch = $_POST['valueToSearch'];
+    $query = "SELECT `FirstName`, `LastName`, `status`, `location`, `exchange_rate` FROM user WHERE CONCAT(`FirstName`, `LastName`, `status`, `location`) LIKE '%:value%'";
+    $query = setOrder($query);
+    print_r($query);
+    $stmt = $dbh->prepare($query);
+    $stmt->execute(['value' => $valueToSearch]);
+  } else {
+    $query = "SELECT `FirstName`, `LastName`, `status`, `location`, `exchange_rate` FROM user";
+    $query = setOrder($query);
+    $stmt = $dbh->prepare($query);
+    $stmt->execute();
   }
-  return $filter_Result;
-}
 
-$orderBy = array('FirstName', 'LastName', 'status', 'location', 'exchange_rate');
-
-$order = 'type';
-if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
-    $order = $_GET['orderBy'];
-    $query = $_SESSION['LastSearch'];
-    $query .= " ORDER BY ".$order;
-    $search_result = filterTable($query);
-
-}
-
+  function setOrder($query) {
+    $orderBy = array('FirstName', 'LastName', 'status', 'location', 'exchange_rate');
+    if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
+      $order = $_GET['orderBy'];
+      $query .= " ORDER BY ".$order;
+    }
+    return $query;
+  }
 ?>
 
 <!DOCTYPE html>
@@ -39,16 +32,15 @@ if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
   <head>
     <title>Search</title>
     <?php
-      include("head.html");
+      include("common/head.html");
     ?>
+    <link rel="stylesheet" type="text/css" href="style/search_style.css">
   </head>
 
   <body>
     <?php
-      include("header.html");
+      include("common/header.html");
     ?>
-
-    <div class="wrapper">
 
     <form action="search.php" method="post">
       <input type="text" name="valueToSearch" placeholder="Search Users" class="form-control"><br>
@@ -63,28 +55,30 @@ if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
           <th class="rate"><a href="?orderBy=exchange_rate">Exchange Rate ($USD/$FLEX)</a></th>
 
         </tr>
-        <?php while($row = mysqli_fetch_array($search_result)):?>
-        <tr>
-          <td><?php echo $row['FirstName'];?></td>
-          <td><?php echo $row['LastName'];?></td>
-          <td><?php
-          if ($row['status'] == 0){
-            echo 'Flexing';
+        <?php
+          while($row = $stmt->fetch()) {
+            $status = "";
+            if ($row['status'] == 0){
+              $status = 'Flexing';
+            }
+            else if ($row['status'] == 1){
+              $status = 'Offline';
+            }
+            else{
+              $status = 'Status Unavailable';
+            }
+            $htmlString = "
+              <tr>
+                <td>" . $row['FirstName'] . "</td>
+                <td>" . $row['LastName'] . "</td>
+                <td>" . $status . "</td>
+                <td>" . $row['location'] . "</td>
+                <td>" . $row['exchange_rate'] . "</td>
+              </tr>";
+            echo $htmlString;
           }
-          else if ($row['status'] == 1){
-            echo 'Offline';
-          }
-          else{
-            echo 'Status Unavailable';
-          }
-          ?></td>
-          <td><?php echo $row['location']; ?></td>
-          <td><?php echo $row['exchange_rate']; ?></td>
-        </tr>
-        <?php endwhile;?>
-
+        ?>
       </table>
     </form>
-  </div>
   </body>
 </html>
