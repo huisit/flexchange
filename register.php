@@ -61,7 +61,7 @@
 </head>
 <body>
     <?php
-        include("common/header.html");
+        include("common/header.php");
     ?>
     <h1>Sign up for FleXchange</h1>
     <p>Please enter your details.</p>
