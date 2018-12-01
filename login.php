@@ -1,19 +1,10 @@
 <?php
-   // include('connect.php');
-   // session_start();
-   //
-   // if($_SERVER["REQUEST_METHOD"] == "POST") {
-   //   //username and password sent from form
-   //
-   //   $myusername = mysqli_real_esca
-
    //initialize session
    session_start();
 
    //check if user is logged in, if yes, redirect them to welcome page
-
    if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true){
-     header("location: welcome.php");
+     header("location: landing.php");
      exit;
    }
 
@@ -21,7 +12,7 @@
    require_once "connect.php";
 
    //define variables & init
-   $email = $password = "";
+   $email = $password = $FirstName = "";
    $email_err = $password_err = "";
 
    //processing form data when form is submitted
@@ -44,7 +35,7 @@
      //validate credentials
      if(empty($email_err) && empty($password_err)){
        //prepare select statement
-       $sql = "SELECT id, email, password FROM user WHERE email = ?";
+       $sql = "SELECT id, email, pass_hash, FirstName FROM user WHERE email = ?";
 
        if($stmt = mysqli_prepare($link, $sql)){
          //bind variables to prepared statement as parameters
@@ -62,7 +53,7 @@
            //check if username exists, if yes, verify password
            if(mysqli_stmt_num_rows($stmt) == 1){
              //bind result variables
-             mysqli_stmt_bind_result($stmt, $id, $email, $hashed_password);
+             mysqli_stmt_bind_result($stmt, $id, $email, $hashed_password, $FirstName);
 
              if(mysqli_stmt_fetch($stmt)){
                if(password_verify($password, $hashed_password)){
@@ -73,9 +64,10 @@
                  $_SESSION["loggedin"] = true;
                  $_SESSION["user_id"] = $id;
                  $_SESSION["email"] = $email;
+                 $_SESSION["FirstName"] = $FirstName;
 
                  //Redirect to landing page
-                 header("location: landing.html");
+                 header("location: landing.php");
                } else {
                  //display error message
                  $password_err = "The password you entered was not valid.";
