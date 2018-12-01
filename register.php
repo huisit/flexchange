@@ -83,7 +83,7 @@
     if(empty($FirstName_err) && empty($LastName_err) && empty($username_err) && empty($password_err) && empty($confirm_password_err)){
 
       //Prepare insert statement
-      $sql = "INSERT INTO user (FirstName, LastName, email, password) VALUES (?, ?, ?,?)";
+      $sql = "INSERT INTO user (FirstName, LastName, email, pass_hash) VALUES (?, ?, ?,?)";
 
       if($stmt = mysqli_prepare($link, $sql)){
 
