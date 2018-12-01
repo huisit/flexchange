@@ -19,10 +19,6 @@ input:focus {
   font-style: italic;
 }
 
-.circleFrame {
-  border-radius: 50%;
-}
-
 .profilePicture {
   position: relative;
 }

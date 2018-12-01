@@ -12,7 +12,7 @@
 
   <body>
     <?php
-      include("common/header.html");
+      include("common/header.php");
     ?>
     <div>
       <h1 style="color: #832E2B; margin: 50px">Welcome back, <?php echo $_SESSION['FirstName']?></h1>

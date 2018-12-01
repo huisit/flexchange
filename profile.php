@@ -2,7 +2,7 @@
   require_once "backend/ensureSession.php";
   require_once "backend/connect.php";
 
-  $stmt = $pdo->prepare("SELECT FirstName, LastName, email FROM users WHERE user_id = :id");
+  $stmt = $pdo->prepare("SELECT FirstName, LastName, email FROM user WHERE user_id = :id");
   $stmt->execute(['id' => $id]);
   $user = $stmt->fetch();
   $name = $user["FirstName"] . $user["LastName"];
@@ -21,7 +21,7 @@
   </head>
   <body>
     <?php
-      include("common/header.html");
+      include("common/header.php");
     ?>
     <div class="vcard">
       <header class="mediaBox">

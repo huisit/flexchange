@@ -39,7 +39,7 @@
 
   <body>
     <?php
-      include("common/header.html");
+      include("common/header.php");
     ?>
 
     <main>

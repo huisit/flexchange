@@ -199,6 +199,10 @@ li {
   background-color: #3e8e41;
 }
 
+.circleFrame {
+  border-radius: 50%;
+}
+
 .form-control {
   display: block;
   width: 100%;
