@@ -1,28 +1,22 @@
 <?php
   require_once "backend/ensureSession.php"; //Ensure the user is logged in
-  require_once "backend/connect.php"; //
+  require_once "backend/connect.php"; //Connect to the database
 
+  //Get the user's information to display
   $stmt = $pdo->prepare("SELECT FirstName, LastName, email FROM user WHERE user_id = :id");
   $stmt->execute(['id' => $id]);
   $user = $stmt->fetch();
   $name = $user["FirstName"] . $user["LastName"];
-  if (is_null($name)) {
-    $name = "ERROR: Invalid Name";
-  }
   $email = $user["email"];
 ?>
 
 <html>
   <head>
-    <?php
-      include("common/head.html")
-     ?>
+    <?php include("common/head.html") ?>
     <link rel="stylesheet" type="text/css" href="profile.css"></link>
   </head>
   <body>
-    <?php
-      include("common/header.php");
-    ?>
+    <?php include("common/header.php"); ?>
     <div class="vcard">
       <header class="mediaBox">
         <div class="profilePicture mediaPicture">
@@ -47,6 +41,7 @@
       </section>
     </div>
     <script>
+      //Allows the user to change their profile picture by clicking on it
       $(document).ready(function() {
         $(".editOverlay").click(function() {
           $("input[id='my_file']").click();

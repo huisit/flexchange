@@ -53,16 +53,12 @@
 <html>
 <head>
   <title>Sign Up</title>
-  <?php
-    include("common/head.html");
-  ?>
+  <?php include("common/head.html"); ?>
   <link rel="stylesheet" href="style/register_style.css">
 
 </head>
 <body>
-    <?php
-        include("common/header.php");
-    ?>
+    <?php include("common/header.php"); ?>
     <h1>Sign up for FleXchange</h1>
     <p>Please enter your details.</p>
     <?php if (isset($msg)) echo "<p>$msg</p>" ?>
