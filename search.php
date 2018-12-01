@@ -67,8 +67,8 @@ if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
     <div class="navbar">
       <ul class="navbarlinks">
         <li><a href="flexupdate.php">Home</a></li>
-        <li><a href="">Friends</a></li>
         <li><a href="search.php"><img src="search.png" width="12px"> Find Flex</a><li>
+        <li><a href="logout.php" class="logout">Logout</a></li>
       </ul>
     </div>
 
