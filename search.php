@@ -48,7 +48,7 @@ if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
 <html>
   <head>
     <title>Search</title>
-    <link rel="stylesheet" href="search_style.css">
+    <link rel="stylesheet" href="style/search_style.css">
     <!-- <style>
        table, tr, th, td
        {
@@ -60,7 +60,7 @@ if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
 
   <body>
     <div class="header">
-      <img src="flexchangelogo.png" width="150px"/>
+      <img src="images/flexchangelogo.png" width="150px"/>
     </div>
 
 

@@ -31,7 +31,6 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="profile_style.css"></link>
     <script src="jquery-3.3.1.min.js"></script>
-    <script src="test.js"></script>
   </head>
   <body>
     <div class="vcard">
@@ -57,5 +56,12 @@
         <button id="editContact">Edit Info</button>
       </section>
     </div>
+    <script>
+      $(document).ready(function() {
+        $(".editOverlay").click(function() {
+          $("input[id='my_file']").click();
+        });
+      });
+    </script>
   </body>
 </html>

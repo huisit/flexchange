@@ -127,7 +127,7 @@
 <body>
 
   <div class="header">
-    <img src="flexchangelogo.png" width="150px"/>
+    <img src="images/flexchangelogo.png" width="150px"/>
   </div>
 
   <div class="navbar">
