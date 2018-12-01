@@ -1,134 +1,80 @@
 <?php
-   //initialize session
-   session_start();
+session_start();
 
-   //check if user is logged in, if yes, redirect them to welcome page
-   if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true){
-     header("Location: index.php");
-     exit;
-   }
+// Connect to the database
+require_once "backend/connect.php";
 
-   //include connection file
-   require_once "backend/connect.php";
+// Check login
+if (isset($_POST['login']) && $_POST['login'] == 'Login') {
+  
+  $salt_stmt = $dbh->prepare('SELECT pass_salt FROM user WHERE email=:email');
+  $salt_stmt->execute(array(':email' => $_POST['email']));
+  $res = $salt_stmt->fetch();
+  $salt = ($res) ? $res['pass_salt'] : '';
+  $salted = hash('sha256', $salt . $_POST['pass']);
 
-   //define variables & init
-   $email = $password = $FirstName = "";
-   $email_err = $password_err = "";
 
-   //processing form data when form is submitted
-   if($_SERVER["REQUEST_METHOD"] == "POST"){
+  
+  $login_stmt = $dbh->prepare('SELECT email, user_id FROM user WHERE email=:email AND pass_hash=:pass');
+  $login_stmt->execute(array(':email' => $_POST['email'], ':pass' => $salted));
+  
+  
+  if ($user = $login_stmt->fetch()) {
+    $_SESSION['email'] = $user['email'];
+    $_SESSION['user_id'] = $user['user_id'];
+  }
+  else {
+    $err = 'Incorrect email or password.';
+  }
+}
 
-     //check if empty username
-     if(empty(trim($_POST["email"]))){
-       $email_err = "Please enter your RPI email";
-     } else {
-       $email = trim($_POST["email"]);
-     }
+// Logout
+if (isset($_SESSION['email']) && isset($_POST['logout']) && $_POST['logout'] == 'Logout') {
+  // Unset the keys from the superglobal
+  unset($_SESSION['email']);
+  unset($_SESSION['user_id']);
+  // Destroy the session cookie for this session
+  setcookie(session_name(), '', time() - 72000);
+  // Destroy the session data store
+  session_destroy();
+  $err = 'You have been logged out.';
+}
 
-     //check if empty password
-     if(empty(trim($_POST["password"]))){
-       $password_err = "Please enter your password";
-     } else {
-       $password = trim($_POST["password"]);
-     }
 
-     //validate credentials
-     if(empty($email_err) && empty($password_err)){
-       //prepare select statement
-       $sql = "SELECT id, email, pass_hash, FirstName FROM user WHERE email = ?";
-
-       if($stmt = mysqli_prepare($link, $sql)){
-         //bind variables to prepared statement as parameters
-         mysqli_stmt_bind_param($stmt, "s", $param_email);
-
-         //set parameters
-         $param_email = $email;
-
-         //attemt to execute prepared statement
-         if(mysqli_stmt_execute($stmt)){
-
-           //store result
-           mysqli_stmt_store_result($stmt);
-
-           //check if username exists, if yes, verify password
-           if(mysqli_stmt_num_rows($stmt) == 1){
-             //bind result variables
-             mysqli_stmt_bind_result($stmt, $id, $email, $hashed_password, $FirstName);
-
-             if(mysqli_stmt_fetch($stmt)){
-               if(password_verify($password, $hashed_password)){
-                 //pass is correct, start session
-                 session_start();
-
-                 //store data in session variables
-                 $_SESSION["loggedin"] = true;
-                 $_SESSION["user_id"] = $id;
-                 $_SESSION["email"] = $email;
-                 $_SESSION["FirstName"] = $FirstName;
-
-                 //Redirect to landing page
-                 header("location: index.php");
-               } else {
-                 //display error message
-                 $password_err = "The password you entered was not valid.";
-               }
-             }
-           } else {
-             //display error msg for email
-             $email_err = "No account found with that email.";
-           }
-         } else {
-           echo "Oops! Something went wrong. Please try again later.";
-         }
-       }
-       //close statement
-       mysqli_stmt_close($stmt);
-
-     }
-     //close connection
-     mysqli_close($link);
-
-   }
- ?>
-
-<!DOCTYPE html>
-<html lang="en">
+?>
+<!doctype html>
+<html>
 <head>
   <title>Login</title>
+  <link rel="shortcut icon" href="">  
   <?php
     include("common/head.html");
   ?>
-  <link rel="stylesheet" href="style/register_style.css">
+  <link rel="stylesheet" type="text/css" href="register_style.css">
 </head>
-
 <body>
-  <?php
-    include("common/header.php");
-  ?>
+        <?php
+          include("common/header.php");
+        ?>
+  <?php if (isset($_SESSION['email'])): ?>
 
-  <main>
-    <h1>Login to FleXchange</h1>
-    <p>Please enter your RPI email and password to login.</p>
+        <form method="post" action="logout.php">
+          <input name="logout" type="submit" value="Logout" />
+        </form>
 
-    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-      <div class="form-group <?php echo (!empty($email_err)) ? 'has-error' : ''; ?>">
-        <label>RPI email</label>
-        <input type="text" name="username" class="form-control" value="<?php echo $email; ?>">
-        <span class="help-block"><?php echo $email_err;?></span>
-      </div>
-
-      <div class="form-group <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
-        <label>Password</label>
-        <input type="password" name="password" class="form-control">
-        <span class="help-block"><?php echo $password_err;?></span>
-      </div>
-
-      <div class="form-group">
-        <input type="submit" class="btn" value="LOGIN">
-      </div>
-
-      <p>Don't have an account? <a href="register.php">Sign up now</a></p>
-    </form>
-  </main>
+  <?php else: ?>
+  <h1>Login</h1>
+  <?php if (isset($err)) echo "<p>$err</p>" ?>
+  <form method="post" action="login.php">
+    <label for="email">RPI Email: </label><input type="text" name="email" />
+    <label for="pass">Password: </label><input type="password" name="pass" />
+    <input name="login" type="submit" value="Login" />
+  </form>
+  <p>Don't have an account? <a href="register.php">Sign up now</a></p>
+  <?php endif; ?>
 </body>
+    <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="lab9.js"></script>
+
 </html>
