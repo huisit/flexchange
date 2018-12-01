@@ -8,6 +8,9 @@
   </head>
 
   <body>
+    <?php
+      include("header.php");
+    ?>
     <header id="header">
       <img id="logo" src="logo.png">
       <img id="user" src="user.png">
@@ -16,7 +19,7 @@
       <a class="nav" href="index.html" style="font-weight: bold">Home</a> <a class="nav" href="#">Find flex</a>
     </header>
     <div>
-      <h1 style="color: #832E2B; margin: 50px">Welcome back, Student Name.</h1>
+      <h1 style="color: #832E2B; margin: 50px">Welcome back, <?php echo ?></h1>
     </div>
     <div id="container">
       <div id="status">

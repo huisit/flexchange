@@ -33,6 +33,9 @@
     <script src="jquery-3.3.1.min.js"></script>
   </head>
   <body>
+    <?php
+      include("header.php");
+    ?>
     <div class="vcard">
       <header class="mediaBox">
         <div class="profilePicture mediaPicture">

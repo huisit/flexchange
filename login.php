@@ -75,7 +75,7 @@
                  $_SESSION["email"] = $email;
 
                  //Redirect to landing page
-                 header("location: landing.html");
+                 header("location: landing.php");
                } else {
                  //display error message
                  $password_err = "The password you entered was not valid.";

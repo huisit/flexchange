@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-
 if (isset($_POST['search'])){
   $valueToSearch = $_POST['valueToSearch'];
   $query = "SELECT `FirstName`, `LastName`, `status`, `location`, `exchange_rate` FROM user WHERE CONCAT(`FirstName`, `LastName`, `status`, `location`) LIKE '%".$valueToSearch."%'";
@@ -10,17 +9,15 @@ if (isset($_POST['search'])){
 } else {
    $query = "SELECT `FirstName`, `LastName`, `status`, `location`, `exchange_rate` FROM user";
    $search_result = filterTable($query);
-
 }
 
-
-function filterTable($query){
+function filterTable($query) {
   $con=mysqli_connect("127.0.0.1","root","","flexchange");
   $filter_Result = mysqli_query($con, $query);
   if (!$filter_Result) {
     printf("Error: %s\n", mysqli_error($con));
     exit();
-}
+  }
   return $filter_Result;
 }
 
@@ -35,14 +32,7 @@ if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
 
 }
 
-
-
-
-
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html>
@@ -54,23 +44,13 @@ if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
        {
          border: 1px solid black;
        }
-
     </style> -->
   </head>
 
   <body>
-    <div class="header">
-      <img src="images/flexchangelogo.png" width="150px"/>
-    </div>
-
-
-    <div class="navbar">
-      <ul class="navbarlinks">
-        <li><a href="flexupdate.php">Home</a></li>
-        <li><a href="">Friends</a></li>
-        <li><a href="search.php"><img src="search.png" width="12px"> Find Flex</a><li>
-      </ul>
-    </div>
+    <?php
+      include("header.php");
+    ?>
 
     <div class="wrapper">
 
@@ -107,12 +87,8 @@ if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
         </tr>
         <?php endwhile;?>
 
-
-
       </table>
-
     </form>
-
   </div>
   </body>
 </html>

@@ -8,15 +8,11 @@
   </head>
 
   <body>
-    <header id="header">
-      <img id="logo" src="logo.png">
-      <img id="user" src="user.png">
-    </header>
-    <div id="nav">
-      <a class="nav" href="index.html" style="font-weight: bold">Home</a> <a class="nav" href="#">Find flex</a>
-    </header>
+    <?php
+      include("header.php");
+    ?>
     <div>
-      <h1 style="color: #832E2B; margin: 50px">Welcome back, Student Name.</h1>
+      <h1 style="color: #832E2B; margin: 50px">Welcome back, <?php echo $_SESSION['FirstName']?></h1>
     </div>
     <div id="container">
       <div id="status">
