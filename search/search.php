@@ -48,34 +48,50 @@ if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
 <html>
   <head>
     <title>Search</title>
-    <style>
+    <link rel="stylesheet" href="search_style.css">
+    <!-- <style>
        table, tr, th, td
        {
          border: 1px solid black;
        }
 
-    </style>
+    </style> -->
   </head>
 
   <body>
-    <form action="search.php" method="post"> 
-      <input type="text" name="valueToSearch" placeholder="Search Users"><br><br>
-      <input type="submit" name="search" value="Search"><br><br>
+    <div class="header">
+      <img src="flexchangelogo.png" width="150px"/>
+    </div>
+
+
+    <div class="navbar">
+      <ul class="navbarlinks">
+        <li><a href="flexupdate.php">Home</a></li>
+        <li><a href="">Friends</a></li>
+        <li><a href="search.php"><img src="search.png" width="12px"> Find Flex</a><li>
+      </ul>
+    </div>
+
+    <div class="wrapper">
+
+    <form action="search.php" method="post">
+      <input type="text" name="valueToSearch" placeholder="Search Users" class="form-control"><br>
+      <input type="submit" name="search" value="Search" class="btn"><br><br>
 
       <table>
         <tr>
-          <th><a href="?orderBy=FirstName">First Name</a> </th>
-          <th><a href="?orderBy=LastName">Last Name</a></th>
-          <th><a href="?orderBy=status">Flex Status</a></th>
-          <th><a href="?orderBy=location">Location</a></th>
-          <th><a href="?orderBy=exchange_rate">Exchange Rate ($USD/$FLEX)</a></th>
+          <th class="firstname"><a href="?orderBy=FirstName">First Name</a> </th>
+          <th class="lastname"><a href="?orderBy=LastName">Last Name</a></th>
+          <th class="status"><a href="?orderBy=status">Flex Status</a></th>
+          <th class="location"><a href="?orderBy=location">Location</a></th>
+          <th class="rate"><a href="?orderBy=exchange_rate">Exchange Rate ($USD/$FLEX)</a></th>
 
         </tr>
         <?php while($row = mysqli_fetch_array($search_result)):?>
         <tr>
           <td><?php echo $row['FirstName'];?></td>
           <td><?php echo $row['LastName'];?></td>
-          <td><?php 
+          <td><?php
           if ($row['status'] == 0){
             echo 'Flexing';
           }
@@ -96,5 +112,7 @@ if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
       </table>
 
     </form>
+
+  </div>
   </body>
 </html>
