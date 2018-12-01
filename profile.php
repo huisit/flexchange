@@ -1,6 +1,6 @@
 <?php
-  require_once "backend/ensureSession.php";
-  require_once "backend/connect.php";
+  require_once "backend/ensureSession.php"; //Ensure the user is logged in
+  require_once "backend/connect.php"; //
 
   $stmt = $pdo->prepare("SELECT FirstName, LastName, email FROM user WHERE user_id = :id");
   $stmt->execute(['id' => $id]);
@@ -17,7 +17,7 @@
     <?php
       include("common/head.html")
      ?>
-    <link rel="stylesheet" type="text/css" href="profile_style.css"></link>
+    <link rel="stylesheet" type="text/css" href="profile.css"></link>
   </head>
   <body>
     <?php

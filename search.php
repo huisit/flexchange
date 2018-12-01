@@ -3,7 +3,7 @@
 
   require "backend/connect.php";
 
-  if (isset($_POST['search'])){
+  if (isset($_POST['search']) && $_POST['valueToSearch'] != ""){
     $valueToSearch = $_POST['valueToSearch'];
     $query = "SELECT `FirstName`, `LastName`, `status`, `location`, `exchange_rate` FROM user WHERE CONCAT(`FirstName`, `LastName`, `status`, `location`) LIKE '%:value%'";
     $query = setOrder($query);
@@ -34,7 +34,7 @@
     <?php
       include("common/head.html");
     ?>
-    <link rel="stylesheet" type="text/css" href="style/search_style.css">
+    <link rel="stylesheet" type="text/css" href="style/search.css">
   </head>
 
   <body>
@@ -45,7 +45,7 @@
     <main>
       <form id="searchForm" action="search.php" method="post">
         <input id="searchText" type="text" name="valueToSearch" placeholder="Search Users" class="form-control">
-        <input id="searchSubmit" type="submit" name="search" value="Search" class="btn"><br><br>
+        <input id="searchSubmit" type="submit" name="search" value="Search" class="btn">
       </form>
 
       <?php
@@ -81,7 +81,7 @@
           }
           echo "</table>";
         } else {
-          echo "No Results";
+          echo "<h1>No Results</h1>";
         }
       ?>
     </main>

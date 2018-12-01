@@ -1,0 +1,35 @@
+#head {
+  background-color: #C83B3E;
+  height: 70px;
+  margin: 0px;
+  text-align: left;
+  padding: 10px;
+  color: white;
+}
+
+#logo {
+  max-height: 70%;
+  padding-top: 10px;
+  padding-left: 30px;
+}
+
+#user {
+  max-height: 60%;
+  margin-top: 10px;
+  margin-right: 20px;
+  float: right;
+}
+
+#nav {
+  background-color: #EDD094;
+  height: 30px;
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin: 0px;
+}
+
+#nav a {
+  padding: 1em;
+  text-align: center;
+}

@@ -98,7 +98,7 @@
   <?php
     include("common/head.html");
   ?>
-  <link rel="stylesheet" href="style/register_style.css">
+  <link rel="stylesheet" href="style/style.css">
 </head>
 
 <body>

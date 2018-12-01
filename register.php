@@ -117,7 +117,6 @@
 <html lang="en">
 <head>
   <title>Sign Up</title>
-  <link rel="stylesheet" href="style/register_style.css">
   <?php
     include("common/head.html");
   ?>

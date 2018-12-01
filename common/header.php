@@ -13,14 +13,19 @@
   }
 ?>
 
-<header>
-  <div id="head">
-    <img id="logo" src="images/logo.png">
-    <a href="profile.php"><img id="user" class="circleFrame" src="profilePictures/<?php echo $profilePicture ?>"></a>
-  </div>
-  <div id="nav">
-    <a href="index.php">Home</a>
-    <a href="search.php"><img src="images/search.png" width="12px"> Find Flex</a>
-    <a href="logout.php" class="logout">Logout</a>
-  </div>
-</header>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="style/header.css">
+  </head>
+  <header>
+    <div id="head">
+      <img id="logo" src="images/logo.png">
+      <a href="profile.php"><img id="user" class="circleFrame" src="profilePictures/<?php echo $profilePicture ?>"></a>
+    </div>
+    <div id="nav">
+      <a href="index.php">Home</a>
+      <a href="search.php"><img src="images/search.png" width="12px"> Find Flex</a>
+      <a href="logout.php" class="logout">Logout</a>
+    </div>
+  </header>
+</html>
