@@ -75,7 +75,7 @@
                  $_SESSION["email"] = $email;
 
                  //Redirect to landing page
-                 header("location: landing.php");
+                 header("location: landing.html");
                } else {
                  //display error message
                  $password_err = "The password you entered was not valid.";
@@ -116,7 +116,6 @@
   <div class="navbar">
     <ul class="navbarlinks">
       <li><a href="login.php">Home</a></li>
-      <li><a href="login.php">Friends</a></li>
       <li><a href="login.php"><img src="search.png" width="12px"> Find Flex</a><li>
     </ul>
   </div>
