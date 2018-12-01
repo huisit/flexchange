@@ -34,7 +34,7 @@ p, li, ul, br {
 li {
   list-style-type: circle;
 }
-#header {
+#head {
   background-color: #C83B3E;
   height: 70px;
   margin: 0px;
@@ -93,7 +93,7 @@ h2 {
   border-bottom: 1px solid #EDD094;
 }
 
-.nav {
+#nav a {
   font-size: 15px;
   text-decoration: none;
   color: #832E2B;

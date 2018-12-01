@@ -27,14 +27,14 @@
 
 <html>
   <head>
-    <meta charset="UTF-8">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <?php
+      include("head.html")
+     ?>
     <link rel="stylesheet" type="text/css" href="profile_style.css"></link>
-    <script src="jquery-3.3.1.min.js"></script>
   </head>
   <body>
     <?php
-      include("header.php");
+      include("header.html");
     ?>
     <div class="vcard">
       <header class="mediaBox">

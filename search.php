@@ -38,18 +38,14 @@ if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
 <html>
   <head>
     <title>Search</title>
-    <link rel="stylesheet" href="style/search_style.css">
-    <!-- <style>
-       table, tr, th, td
-       {
-         border: 1px solid black;
-       }
-    </style> -->
+    <?php
+      include("head.html");
+    ?>
   </head>
 
   <body>
     <?php
-      include("header.php");
+      include("header.html");
     ?>
 
     <div class="wrapper">

@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Flexchange - Landing Page</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="style/style.css">
+    <title>Flexchange</title>
+    <?php
+      include("head.html");
+    ?>
   </head>
 
   <body>
     <?php
-      include("header.php");
+      include("header.html");
     ?>
     <div>
       <h1 style="color: #832E2B; margin: 50px">Welcome back, <?php echo $_SESSION['FirstName']?></h1>
