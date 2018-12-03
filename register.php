@@ -5,7 +5,7 @@
   require_once "backend/connect.php";
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-  if (isset($_POST['register']) && $_POST['register'] == 'Register') {
+  if (isset($_POST['register']) && $_POST['register'] == 'START FLEXING') {
 
     // @TODO: Check to see if duplicate emails exist
 
