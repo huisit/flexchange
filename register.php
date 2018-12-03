@@ -54,7 +54,6 @@
 <head>
   <title>Sign Up</title>
   <?php include("common/head.html"); ?>
-  <link rel="stylesheet" href="style/register.css">
 
 </head>
 <body>
