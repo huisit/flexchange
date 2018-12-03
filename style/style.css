@@ -116,6 +116,13 @@ li {
   color: #DEC8C7;
 }
 
+.wrapper {
+  margin: 0 auto;
+  width: 600px;
+  padding-top: 15px;
+  padding-left: 15px;
+}
+
 .btn {
   border: none;
   padding: 1em;
@@ -196,10 +203,11 @@ li {
 }
 
 ._label {
-  font-weight: bold;
+  font-weight: 700;
   font-size: 1em;
   text-transform: uppercase;
   color: #c6a7a5;
+  font-family: 'Roboto', sans-serif;
 }
 
 .form-group {
