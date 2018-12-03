@@ -54,23 +54,54 @@
 <head>
   <title>Sign Up</title>
   <?php include("common/head.html"); ?>
-  <link rel="stylesheet" href="style/register_style.css">
+  <link rel="stylesheet" href="style/register.css">
 
 </head>
 <body>
     <?php include("common/header.php"); ?>
+  
     <h1>Sign up for FleXchange</h1>
+  
+  
+    <div class="wrapper">
     <p>Please enter your details.</p>
     <?php if (isset($msg)) echo "<p>$msg</p>" ?>
     <form method="post" action="register.php">
-        <label for="firstname">First Name: </label><input type="text" name="firstname" />
-        <label for="lastname">Last Name: </label><input type="text" name="lastname" />
-        <label for="email">RPI Email: </label><input type="text" name="email" />
-        <label for="pass">Password: </label><input type="password" name="pass" />
-        <label for="passconfirm">Confirm Password: </label><input type="password" name="passconfirm" />
-        <input type="submit" name="register" value="Register" />
-    </form>
 
-    <p>Already have an account? <a href="login.php">Login here</a>.</p>
+      <div class="form-group">
+        <label for="firstname" class="_label">First Name </label>
+        <input type="text" name="firstname" class="form-control"/>
+      </div>
+
+      <div class="form-group">
+        <label for="lastname" class="_label">Last Name </label>
+        <input type="text" name="lastname" class="form-control"/>
+      </div>
+
+      <div class="form-group">
+        <label for="email" class="_label">RPI Email </label>
+        <input type="text" name="email" class="form-control"/>
+      </div>
+
+      <div class="form-group">
+        <label for="pass" class="_label">Password </label>
+        <input type="password" name="pass" class="form-control"/>
+      </div>
+
+      <div class="form-group">
+        <label for="passconfirm" class="_label">Confirm Password</label>
+        <input type="password" name="passconfirm" class="form-control"/>
+      </div>
+
+      <div class="form-group">
+        <input type="submit" name="register" value="Register" class="btn"/>
+      </div>
+
+    </form>
+        <p>Already have an account? <a href="login.php">Login here</a>.</p>
+    </div>
+  
+  
+  
 </body>
 </html>
