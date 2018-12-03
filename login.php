@@ -10,7 +10,7 @@ if (isset($_SESSION['email'])) {
 }
 
 // Check login
-if (isset($_POST['login']) && $_POST['login'] == 'Login') {
+if (isset($_POST['login']) && $_POST['login'] == 'LOGIN') {
 
   $salt_stmt = $dbh->prepare('SELECT pass_salt FROM user WHERE email=:email');
   $salt_stmt->execute(array(':email' => $_POST['email']));
