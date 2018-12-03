@@ -1,7 +1,6 @@
-<!-- Make sure the user is logged in -->
-<?php 
-
-  require_once "backend/ensureSession.php"; 
+<?php
+  //Make sure the user is logged in
+  require_once "backend/ensureSession.php";
   require "backend/connect.php";
 
   $user_id = $_SESSION['user_id'];
@@ -9,25 +8,25 @@
   function updateFlexStatus($dbh, $user_id){
 
     //if user clicks "update status" and hasn't chosen an option
-    if (!isset($_POST['status'])){
+    if (!isset($_POST['status'])) {
         echo "select a status option before updating.";
         $_POST['status'] = '';
     }
     //if user is flexing
-    if ($_POST['status'] == 'flex'){
+    if ($_POST['status'] == 'flex') {
         //echo "flex!";
         $prep = $dbh->prepare("UPDATE `user` SET `status` = 0 WHERE `user`.`user_id` = $user_id;");
         $prep->execute();
     }
     //if user is going offline
-    if ($_POST['status'] == 'offline'){
+    if ($_POST['status'] == 'offline') {
        // echo "offline.";
         $prep = $dbh->prepare("UPDATE `user` SET `status` = 1 WHERE `user`.`user_id` = $user_id;");
         $prep->execute();
     }
 
   }
-  function updateLocation($dbh, $user_id){
+  function updateLocation($dbh, $user_id) {
     //our accepted location values
     $locations = array(
       "BARH",
@@ -43,7 +42,7 @@
       "Student Union");
 
       //if user clicks "update location" and hasn't chosen an option
-      if (!isset($_POST['location'])){
+      if (!isset($_POST['location'])) {
           echo "select a location option before updating.";
           $_POST['location'] = '';
       }
@@ -59,13 +58,13 @@
         echo "Select a location option before updating.";
       }
   }
-  function updateExchangeRate($dbh, $user_id){
+  function updateExchangeRate($dbh, $user_id) {
     //if they didn't provide a value
     if (!isset($_POST['exchangerate'])){
         echo "Please input an exchange rate before submitting.";
     }
     //if they did provide a value
-    if (isset($_POST['exchangerate'])){
+    if (isset($_POST['exchangerate'])) {
         $exchange_rate = $_POST['exchangerate'];
         //echo "Your exchange rate is now ".$exchange_rate;
         $prep = $dbh->prepare("UPDATE `user` SET `exchange_rate` = '$exchange_rate' WHERE `user`.`user_id` = $user_id;");
@@ -76,20 +75,20 @@
 
   //UPDATE USER STATUS AS "FLEXING" OR "OFFLINE"
   //if 'update status' button was clicked:
-  
-  if (isset($_POST['sub_status'])){
+
+  if (isset($_POST['sub_status'])) {
     updateFlexStatus($dbh, $user_id);
   }
 
   //UPDATE USER LOCATION
   //if 'submit location' button was clicked:
-  if (isset($_POST['sub_location'])){
+  if (isset($_POST['sub_location'])) {
     updateLocation($dbh, $user_id);
   }
 
   //UPDATING EXCHANGE RATE
   //if user clicks "update exchange rate" button
-  if (isset($_POST['sub_exchangerate'])){
+  if (isset($_POST['sub_exchangerate'])) {
     updateExchangeRate($dbh, $user_id);
   }
 ?>
@@ -99,13 +98,13 @@
   <head>
     <title>Flexchange</title>
     <!-- Common head data -->
-    <?php include("common/head.html"); ?> 
+    <?php include("common/head.html"); ?>
 
   </head>
 
   <body>
     <?php include("common/header.php"); ?>
-    <h1 style="color: #832E2B; margin: 50px">Welcome back,       
+    <h1 style="color: #832E2B; margin: 50px">Welcome back,
         <?php
         $fname = $_SESSION['FirstName'];
         $lname = $_SESSION['LastName'];
@@ -150,7 +149,7 @@
               </select>
               <input type="submit" name="sub_location" value="Update Location">
             </form>
-          </div>          
+          </div>
       </div>
   </body>
 </html>

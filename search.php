@@ -3,28 +3,25 @@
 
   require "backend/connect.php";
 
+  $valueToSearch = null;
   if (isset($_POST['search']) && $_POST['valueToSearch'] != ""){
     $valueToSearch = $_POST['valueToSearch'];
-    $query = "SELECT `FirstName`, `LastName`, `status`, `location`, `exchange_rate` FROM user WHERE CONCAT(`FirstName`, `LastName`, `status`, `location`) LIKE '%:value%'";
-    $query = setOrder($query);
-    print_r($query);
-    $stmt = $dbh->prepare($query);
-    $stmt->execute(['value' => $valueToSearch]);
+    $query = "SELECT `FirstName`, `LastName`, `status`, `location`, `exchange_rate`, `email` FROM user WHERE CONCAT(`FirstName`, `LastName`, `status`, `location`) LIKE '%:value%'";
   } else {
-    $query = "SELECT `FirstName`, `LastName`, `status`, `location`, `exchange_rate` FROM user";
-    $query = setOrder($query);
-    $stmt = $dbh->prepare($query);
-    $stmt->execute();
+    $query = "SELECT `FirstName`, `LastName`, `status`, `location`, `exchange_rate`, `email` FROM user";
   }
-
-  function setOrder($query) {
-    $orderBy = array('FirstName', 'LastName', 'status', 'location', 'exchange_rate');
-    if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
-      $order = $_GET['orderBy'];
-      $query .= " ORDER BY ".$order;
-    }
-    return $query;
+  $id = null;
+  if (!isset($_SESSION["user_id"])) {
+    $id = $_SESSION["user_id"];
+    $query .= "AND NOT `id` = :id";
   }
+  $orderBy = array('FirstName', 'LastName', 'status', 'location', 'exchange_rate');
+  if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
+    $order = $_GET['orderBy'];
+    $query .= " ORDER BY ".$order;
+  }
+  $stmt = $dbh->prepare($query);
+  $stmt->execute(['value' => $valueToSearch, 'id' => $id]);
 ?>
 
 <!DOCTYPE html>
@@ -58,12 +55,21 @@
                 <th class='status'><a href='?orderBy=status'>Flex Status</a></th>
                 <th class='location'><a href='?orderBy=location'>Location</a></th>
                 <th class='rate'><a href='?orderBy=exchange_rate'>\$USD/\$FLEX</a></th>
+                <th class='contact'><a href='??orderBy=status'>Contact</a></th>
               </tr>
           ";
           while($row = $stmt->fetch()) {
             $status = "";
+            $contactButton = "";
             if ($row['status'] == 0){
               $status = 'Flexing';
+              $contactButton = "
+                <form action='email.php' method='post'>
+                  <input type='hidden' name='email' value=" . $row['email'] . ">
+                  <input type='hidden' name='name' value=" . $row['FirstName'] . ">
+                  <input type='submit' name='search' value='Exchange' class='btn'>
+                </form>
+              ";
             } else if ($row['status'] == 1){
               $status = 'Offline';
             } else {
@@ -76,6 +82,7 @@
                 <td>" . $status . "</td>
                 <td>" . $row['location'] . "</td>
                 <td>" . $row['exchange_rate'] . "</td>
+                <td>" . $contactButton . "</td>
               </tr>
             ";
           }
