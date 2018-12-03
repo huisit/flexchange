@@ -123,6 +123,15 @@ li {
   padding-left: 15px;
 }
 
+.wrapper2 {
+  float: left;
+  margin-left: 10px;
+  margin-top: 10px;
+  width: 1000px;
+  padding-top: 15px;
+  padding-left: 15px;
+}
+
 .btn {
   border: none;
   padding: 1em;
@@ -133,6 +142,7 @@ li {
   background-color: #D83D3D;
   opacity: 0.8;
   transition: 0.2s;
+  cursor: pointer;
 }
 
 .btn:hover {
