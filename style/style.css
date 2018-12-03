@@ -60,7 +60,21 @@ h2 {
 a {
   font-weight: bold;
   color: #842D29;
-  font-family: Roboto;
+  font-family: 'Roboto';
+  text-decoration: none;
+}
+
+a.nav {
+  font-weight: normal;
+  color: #842D29;
+  font-family: 'Roboto';
+  text-decoration: none;
+}
+
+a.logout {
+  font-weight: normal;
+  color: #842D29;
+  font-family: 'Roboto';
   text-decoration: none;
 }
 
