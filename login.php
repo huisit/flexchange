@@ -73,6 +73,5 @@ if (isset($_POST['login']) && $_POST['login'] == 'Login') {
 </body>
     <script
     src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="lab9.js"></script>
 
 </html>
