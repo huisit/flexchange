@@ -39,10 +39,11 @@
       include("common/header.php");
     ?>
 
-    <main>
+      <div class="wrapper2">
+
       <form id="searchForm" action="search.php" method="post">
-        <input id="searchText" type="text" name="valueToSearch" placeholder="Search Users" class="form-control">
-        <input id="searchSubmit" type="submit" name="search" value="Search" class="btn">
+        <input id="searchText" type="text" name="valueToSearch" placeholder="Search Users" class="form-control2">
+        <input id="searchSubmit" type="submit" name="search" value="Search" class="btn"><br/>
       </form>
 
       <?php
@@ -91,6 +92,6 @@
           echo "<h1>No Results</h1>";
         }
       ?>
-    </main>
+    </div>
   </body>
 </html>
