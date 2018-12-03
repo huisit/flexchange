@@ -93,7 +93,7 @@
       </div>
 
       <div class="form-group">
-        <input type="submit" name="register" value="Register" class="btn"/>
+        <input type="submit" name="register" value="START FLEXING" class="btn"/>
       </div>
 
     </form>
