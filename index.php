@@ -97,29 +97,18 @@
           <h2>Online Status</h2>
             <!--UPDATE FLEX STATUS-->
             <form action="index.php" method="post" id="statusForm">
-<<<<<<< HEAD
-                <input type="radio" name="status" value="flex" class="form-radio">FLEXING
-                <input type="radio" name="status" value="offline" class="form-radio">OFFLINE
-                <br>
-                <input type="submit" name="sub_status" value="Update Status" class="btn2">
-=======
               <input type="radio" name="status" value="flex" class="form-radio" <?php if($status==0) echo "checked" ?>>FLEXING
               <input type="radio" name="status" value="offline" class="form-radio" <?php if($status==1) echo "checked" ?>>OFFLINE
               <input type="submit" name="sub_status" value="Update Status" class="btn2">
->>>>>>> 44a07e458a3e6a41a69dc4cd9faeb744cdfffa3a
             </form>
         </div>
         <div id="rate">
-          <h2>Transfer Rate - USD to FLEX</h2>
+          <h2>Transfer Rate</h2>
             <!--CHOOSE EXCHANGE RATE-->
-            <br>
             <form action="index.php" method="post" id="statusForm">
-<<<<<<< HEAD
-              <input type="text" name="exchangerate" class="form-control" placeholder="ex. $0.50 USD per $1 FLEX">
-=======
-              <label for="exchangerate">$USD to FLEX</label><input type="text" name="exchangerate" class="form-control" value='<?php echo $exchange_rate ?>' placeholder="ex. $0.50 / 1 FLEX">
->>>>>>> 44a07e458a3e6a41a69dc4cd9faeb744cdfffa3a
-              <input type="submit" name="sub_exchangerate" value="Update Exchange Rate" class="btn2">
+              <input type="text" name="exchangerate" class="form-control" value='<?php echo $exchange_rate ?>' placeholder="ex. $0.50 / 1 FLEX">
+              <label for="exchangerate">$ USD per $1 FLEX</label>
+              <input type="submit" name="sub_exchangerate" value="Update Exchange Rate" class="btn">
             </form>
         </div>
         <div id="location">
