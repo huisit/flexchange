@@ -40,12 +40,7 @@
     $headers = "MIME-Version: 1.0\r\nContent-type: text/html; charset=iso8859-1\r\n";
     $headers .= "From: FleXchange No-Reply <flexchange.noreply@gmail.com>\r\n";
     mail($_POST['email'], $subject, $message, $headers);
-    echo $_POST['email'];
-    echo $subject;
-    echo $message;
-    echo $headers;
-    // echo "<script type='text/javascript'>alert('You will recieve an email if they confirm to meet with you')</script>";
-    // header("Location: search.php");
+    header("Location: search.php");
   }
 ?>
 <!doctype html>
