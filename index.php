@@ -13,7 +13,7 @@
   $location = $status_info['location'];
   $exchange_rate = $status_info['exchange_rate'];
 
-  function updateFlexStatus($dbh, $user_id){
+  function updateFlexStatus($dbh, $user_id) {
     //if user clicks "update status" and hasn't chosen an option
     if (!isset($_POST['status'])) {
         echo "select a status option before updating.";
@@ -31,33 +31,14 @@
         $prep = $dbh->prepare("UPDATE `user` SET `status` = 1 WHERE `user`.`user_id` = $user_id;");
         $prep->execute();
     }
-
   }
-  function updateLocation($dbh, $user_id) {
-    //our accepted location values
-    $locations = array(
-      "BARH",
-      "Blitman Dining Hall",
-      "Commons Dining Hall",
-      "DCC Cafe",
-      "EMPAC Cafe (Evelyns)",
-      "Library Cafe",
-      "Moes",
-      "Pittsburgh Cafe",
-      "Sage Cafe",
-      "Sage Dining Hall",
-      "Student Union");
 
+  function updateLocation($dbh, $user_id) {
       //if user clicks "update location" and hasn't chosen an option
-      if (!isset($_POST['location'])) {
-        echo "select a location option before updating.";
-        $_POST['location'] = '';
-      }
-      if (isset($_POST['location']) && in_array($_POST['location'], $locations)){
-        $current_location = $_POST['location'];
-        $prep = $dbh->prepare("UPDATE `user` SET `location` = '$current_location' WHERE `user`.`user_id` = $user_id;");
-        $prep->execute();
-      } else{
+      if (isset($_POST['location'])) {
+        $prep = $dbh->prepare("UPDATE `user` SET `location` = :loc WHERE `user`.`user_id` = :id;");
+        $prep->execute(['loc' => $_POST['location'], 'id' => $_SESSION['user_id']]);
+      } else {
         echo "Select a location option before updating.";
       }
   }
@@ -74,7 +55,6 @@
         $prep->execute();
     }
   }
-
 
   //UPDATE USER STATUS AS "FLEXING" OR "OFFLINE"
   //if 'update status' button was clicked:
@@ -136,18 +116,20 @@
           <div class="styled-select semi-square">
             <form action="index.php" method="post">
               <select name="location" class="custom-select" style="width:220px;">
+                <option value="null">Please select an option..</option>
                 <?php
                   $locations = [
-                    'null', 'BARH', 'Blitman Dining Hall', 'Commons Dining Hall',
-                    'DCC Cafe', 'EMPAC Cafe (Evelyns)', 'Library Cafe', 'Moes',
-                    'Pittsburgh Cafe', 'Sage Cafe', 'Sage Dining Hall', 'Student Union'];
+                    'BARH', 'Blitman Dining Hall', 'Commons Dining Hall', 'DCC Cafe',
+                    'EMPAC Cafe (Evelyns)', 'Library Cafe', 'Moes', 'Pittsburgh Cafe',
+                    'Sage Cafe', 'Sage Dining Hall', 'Student Union'
+                  ];
+                  print_r($location);
                   for ($i = 0; $i < sizeof($locations); $i++) {
                     $selected = "";
                     if($location == $locations[$i]) {
                       $selected = "selected";
                     }
-
-                    echo '<option ' . $selected . 'value=' . $locations[$i] . '>' . $locations[$i] . '</option>';
+                    echo '<option ' . $selected . ' value=' . $locations[$i] . '>' . $locations[$i] . '</option>';
                   }
                 ?>
               </select>

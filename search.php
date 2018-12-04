@@ -9,10 +9,10 @@
   } else {
     $query = "SELECT `FirstName`, `LastName`, `status`, `location`, `exchange_rate`, `email` FROM `user` WHERE 1";
   }
-  if (isset($_SESSION["user_id"])) {
-    $query .= " AND `user_id` != ?";
-    array_push($params, $_SESSION["user_id"]);
-  }
+  // if (isset($_SESSION["user_id"])) {
+  //   $query .= " AND `user_id` != ?";
+  //   array_push($params, $_SESSION["user_id"]);
+  // }
   $orderBy = array('FirstName', 'LastName', 'status', 'location', 'exchange_rate');
   if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
     $order = $_GET['orderBy'];
