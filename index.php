@@ -115,25 +115,26 @@
         <div id="status">
           <h2>Online Status</h2>
             <!--UPDATE FLEX STATUS-->
-            <form action="index.php" method="post">
-                <input type="radio" name="status" value="flex"> Flex
-                <input type="radio" name="status" value="offline"> Offline
-                <input type="submit" name="sub_status" value="Update Status">
+            <form action="index.php" method="post" id="statusForm">
+                <input type="radio" name="status" value="flex" class="form-radio">FLEXING
+                <input type="radio" name="status" value="offline" class="form-radio">OFFLINE
+                <input type="submit" name="sub_status" value="Update Status" class="btn2">
             </form>
         </div>
         <div id="rate">
           <h2>Transfer Rate</h2>
             <!--CHOOSE EXCHANGE RATE-->
-            <form action="index.php" method="post">
-              $USD <input type="text" name="exchangerate"> per $FLEX
-              <input type="submit" name="sub_exchangerate" value="Update Exchange Rate">
+            <form action="index.php" method="post" id="statusForm">
+              <label for="exchangerate">$USD to FLEX</label><input type="text" name="exchangerate" class="form-control" placeholder="ex. $0.50 / 1 FLEX">
+              <input type="submit" name="sub_exchangerate" value="Update Exchange Rate" class="btn2">
             </form>
         </div>
         <div id="location">
           <h2>Preferred Location</h2>
             <!--CHOOSE LOCATION-->
+          <div class="styled-select semi-square">
             <form action="index.php" method="post">
-              <select name="location">
+              <select name="location" class="custom-select" style="width:220px;">
                 <option value="null">Please select an option..</option>
                 <option value="BARH">BARH Dining Hall</option>
                 <option value="Blitman Dining Hall">Blitman Dining Hall</option>
@@ -147,7 +148,8 @@
                 <option value="Sage Dining Hall">Sage Dining Hall</option>
                 <option value="Student Union">Student Union</option>
               </select>
-              <input type="submit" name="sub_location" value="Update Location">
+              </div>
+              <input type="submit" name="sub_location" value="Update Location" class="btn2">
             </form>
           </div>
       </div>
