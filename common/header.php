@@ -1,18 +1,3 @@
-<?php
-  //Find the user's profile picture, if they're logged in
-  if (isset($_SESSION["user_id"])) {
-    require_once "backend/connect.php";
-    $pic_stmt = $dbh->prepare("SELECT `img_name` FROM user WHERE user_id = :id");
-    $pic_stmt->execute(['id' => $_SESSION["user_id"]]);
-    $profilePicture = $pic_stmt->fetch()[0];
-    if (is_null($profilePicture) || $profilePicture == "") {
-      $profilePicture = "default.png";
-    }
-  } else {
-    $profilePicture = "default.png";
-  }
-?>
-
 <html>
   <head>
     <link rel="stylesheet" type="text/css" href="style/header.css">
@@ -22,7 +7,19 @@
     <!-- Logo and profile -->
     <div id="head">
       <img id="logo" src="images/logo.png">
-      <a href="profile.php"><img id="user" class="circleFrame" src="profilePictures/<?php echo $profilePicture ?>"></a>
+      <?php
+        //Find the user's profile picture, if they're logged in
+        if (isset($_SESSION["user_id"])) {
+          require_once "backend/connect.php";
+          $pic_stmt = $dbh->prepare("SELECT `img_name` FROM user WHERE user_id = :id");
+          $pic_stmt->execute(['id' => $_SESSION["user_id"]]);
+          $profilePicture = $pic_stmt->fetch()[0];
+          if (is_null($profilePicture) || $profilePicture == "") {
+            $profilePicture = "default.png";
+          }
+          echo "<a href='profile.php'><img id='user' class='circleFrame' src='profilePictures/" . $profilePicture . "'></a>";
+        }
+      ?>
     </div>
     <!-- Webpages -->
     <div id="nav">

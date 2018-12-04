@@ -16,43 +16,46 @@
   function updateFlexStatus($dbh, $user_id) {
     //if user clicks "update status" and hasn't chosen an option
     if (!isset($_POST['status'])) {
-        echo "select a status option before updating.";
-        $_POST['status'] = '';
+      echo "select a status option before updating.";
+      $_POST['status'] = '';
     }
     //if user is flexing
     if ($_POST['status'] == 'flex') {
-        //echo "flex!";
-        $prep = $dbh->prepare("UPDATE `user` SET `status` = 0 WHERE `user`.`user_id` = $user_id;");
-        $prep->execute();
+      //echo "flex!";
+      $status = 0;
+      $prep = $dbh->prepare("UPDATE `user` SET `status` = 0 WHERE `user`.`user_id` = $user_id;");
+      $prep->execute();
     }
     //if user is going offline
     if ($_POST['status'] == 'offline') {
-       // echo "offline.";
-        $prep = $dbh->prepare("UPDATE `user` SET `status` = 1 WHERE `user`.`user_id` = $user_id;");
-        $prep->execute();
+      // echo "offline.";
+      $status = 1;
+      $prep = $dbh->prepare("UPDATE `user` SET `status` = 1 WHERE `user`.`user_id` = $user_id;");
+      $prep->execute();
     }
   }
 
   function updateLocation($dbh, $user_id) {
-      //if user clicks "update location" and hasn't chosen an option
-      if (isset($_POST['location'])) {
-        $prep = $dbh->prepare("UPDATE `user` SET `location` = :loc WHERE `user`.`user_id` = :id;");
-        $prep->execute(['loc' => $_POST['location'], 'id' => $_SESSION['user_id']]);
-      } else {
-        echo "Select a location option before updating.";
-      }
+    //if user clicks "update location" and hasn't chosen an option
+    if (isset($_POST['location'])) {
+      $location = $_POST['location'];
+      $prep = $dbh->prepare("UPDATE `user` SET `location` = :loc WHERE `user`.`user_id` = :id;");
+      $prep->execute(['loc' => $location, 'id' => $_SESSION['user_id']]);
+    } else {
+      echo "Select a location option before updating.";
+    }
   }
   function updateExchangeRate($dbh, $user_id) {
     //if they didn't provide a value
     if (!isset($_POST['exchangerate'])){
-        echo "Please input an exchange rate before submitting.";
+      echo "Please input an exchange rate before submitting.";
     }
     //if they did provide a value
     if (isset($_POST['exchangerate'])) {
-        $exchange_rate = $_POST['exchangerate'];
-        //echo "Your exchange rate is now ".$exchange_rate;
-        $prep = $dbh->prepare("UPDATE `user` SET `exchange_rate` = '$exchange_rate' WHERE `user`.`user_id` = $user_id;");
-        $prep->execute();
+      $exchange_rate = $_POST['exchangerate'];
+      //echo "Your exchange rate is now ".$exchange_rate;
+      $prep = $dbh->prepare("UPDATE `user` SET `exchange_rate` = '$exchange_rate' WHERE `user`.`user_id` = $user_id;");
+      $prep->execute();
     }
   }
 
@@ -124,7 +127,6 @@
                     'EMPAC Cafe (Evelyns)', 'Library Cafe', 'Moes', 'Pittsburgh Cafe',
                     'Sage Cafe', 'Sage Dining Hall', 'Student Union'
                   ];
-                  print_r($location);
                   for ($i = 0; $i < sizeof($locations); $i++) {
                     $selected = "";
                     if($location == $locations[$i]) {
