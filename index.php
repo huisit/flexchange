@@ -141,11 +141,12 @@
                     'null', 'BARH', 'Blitman Dining Hall', 'Commons Dining Hall',
                     'DCC Cafe', 'EMPAC Cafe (Evelyns)', 'Library Cafe', 'Moes',
                     'Pittsburgh Cafe', 'Sage Cafe', 'Sage Dining Hall', 'Student Union'];
-                  for ($i = 0; $i < sizeof($locations); $i) {
+                  for ($i = 0; $i < sizeof($locations); $i++) {
                     $selected = "";
                     if($location == $locations[$i]) {
                       $selected = "selected";
                     }
+
                     echo '<option ' . $selected . 'value=' . $locations[$i] . '>' . $locations[$i] . '</option>';
                   }
                 ?>
