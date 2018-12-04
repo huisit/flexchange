@@ -5,8 +5,15 @@
 
   $user_id = $_SESSION['user_id'];
 
-  function updateFlexStatus($dbh, $user_id){
+  //Get current status
+  $status_stmt = $dbh->prepare("SELECT `status`, `location`, `exchange_rate` FROM `user` WHERE `user_id` = :id");
+  $status_stmt->execute(['id' => $user_id]);
+  $status_info = $status_stmt->fetch();
+  $status = $status_info['status'];
+  $location = $status_info['location'];
+  $exchange_rate = $status_info['exchange_rate'];
 
+  function updateFlexStatus($dbh, $user_id){
     //if user clicks "update status" and hasn't chosen an option
     if (!isset($_POST['status'])) {
         echo "select a status option before updating.";
@@ -43,18 +50,14 @@
 
       //if user clicks "update location" and hasn't chosen an option
       if (!isset($_POST['location'])) {
-          echo "select a location option before updating.";
-          $_POST['location'] = '';
+        echo "select a location option before updating.";
+        $_POST['location'] = '';
       }
       if (isset($_POST['location']) && in_array($_POST['location'], $locations)){
-          $current_location = $_POST['location'];
-          //echo "you chose ".$current_location;
-
-          $prep = $dbh->prepare("UPDATE `user` SET `location` = '$current_location' WHERE `user`.`user_id` = $user_id;");
-          $prep->execute();
-
-      }
-      else{
+        $current_location = $_POST['location'];
+        $prep = $dbh->prepare("UPDATE `user` SET `location` = '$current_location' WHERE `user`.`user_id` = $user_id;");
+        $prep->execute();
+      } else{
         echo "Select a location option before updating.";
       }
   }
@@ -75,7 +78,6 @@
 
   //UPDATE USER STATUS AS "FLEXING" OR "OFFLINE"
   //if 'update status' button was clicked:
-
   if (isset($_POST['sub_status'])) {
     updateFlexStatus($dbh, $user_id);
   }
@@ -99,7 +101,6 @@
     <title>Flexchange</title>
     <!-- Common head data -->
     <?php include("common/head.html"); ?>
-
   </head>
 
   <body>
@@ -116,16 +117,16 @@
           <h2>Online Status</h2>
             <!--UPDATE FLEX STATUS-->
             <form action="index.php" method="post" id="statusForm">
-                <input type="radio" name="status" value="flex" class="form-radio">FLEXING
-                <input type="radio" name="status" value="offline" class="form-radio">OFFLINE
-                <input type="submit" name="sub_status" value="Update Status" class="btn2">
+              <input type="radio" name="status" value="flex" class="form-radio" <?php if($status==0) echo "checked" ?>>FLEXING
+              <input type="radio" name="status" value="offline" class="form-radio" <?php if($status==1) echo "checked" ?>>OFFLINE
+              <input type="submit" name="sub_status" value="Update Status" class="btn2">
             </form>
         </div>
         <div id="rate">
           <h2>Transfer Rate</h2>
             <!--CHOOSE EXCHANGE RATE-->
             <form action="index.php" method="post" id="statusForm">
-              <label for="exchangerate">$USD to FLEX</label><input type="text" name="exchangerate" class="form-control" placeholder="ex. $0.50 / 1 FLEX">
+              <label for="exchangerate">$USD to FLEX</label><input type="text" name="exchangerate" class="form-control" value='<?php echo $exchange_rate ?>' placeholder="ex. $0.50 / 1 FLEX">
               <input type="submit" name="sub_exchangerate" value="Update Exchange Rate" class="btn2">
             </form>
         </div>
@@ -135,18 +136,19 @@
           <div class="styled-select semi-square">
             <form action="index.php" method="post">
               <select name="location" class="custom-select" style="width:220px;">
-                <option value="null">Please select an option..</option>
-                <option value="BARH">BARH Dining Hall</option>
-                <option value="Blitman Dining Hall">Blitman Dining Hall</option>
-                <option value="Commons Dining Hall">Commons Dining Hall</option>
-                <option value="DCC Cafe">DCC Cafe</option>
-                <option value="EMPAC Cafe (Evelyns)">EMPAC Cafe (Evelyn's)</option>
-                <option value="Library Cafe">Library Cafe</option>
-                <option value="Moes">Moe's</option>
-                <option value="Pittsburgh Cafe">Pittsburgh Cafe</option>
-                <option value="Sage Cafe">Sage Cafe</option>
-                <option value="Sage Dining Hall">Sage Dining Hall</option>
-                <option value="Student Union">Student Union</option>
+                <?php
+                  $locations = [
+                    'null', 'BARH', 'Blitman Dining Hall', 'Commons Dining Hall',
+                    'DCC Cafe', 'EMPAC Cafe (Evelyns)', 'Library Cafe', 'Moes',
+                    'Pittsburgh Cafe', 'Sage Cafe', 'Sage Dining Hall', 'Student Union'];
+                  for ($i = 0; $i < sizeof($locations); $i) {
+                    $selected = "";
+                    if($location == $locations[$i]) {
+                      $selected = "selected";
+                    }
+                    echo '<option ' . $selected . 'value=' . $locations[$i] . '>' . $locations[$i] . '</option>';
+                  }
+                ?>
               </select>
               </div>
               <input type="submit" name="sub_location" value="Update Location" class="btn2">
