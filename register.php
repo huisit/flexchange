@@ -7,15 +7,13 @@
 
   if (isset($_POST['register']) && $_POST['register'] == 'START FLEXING') {
 
-    // @TODO: Check to see if duplicate emails exist
-
     //first check to see if we've already got that email
-    $prep = $dbh->prepare("SELECT * FROM user WHERE `email` = :email");
-    $prep->execute(['email' => $_POST['email']]);
-    $check = $prep->fetch(PDO::FETCH_ASSOC);
+    $prep = $dbh->prepare("SELECT * FROM user WHERE `email` = '".$_POST['email']."'");
+    $prep->execute();
+    $email_check = $prep->fetch(PDO::FETCH_ASSOC);
 
-    //if we haven't already got the email, set a bool to
-    if ($check != null){
+    //set bool for email check
+    if ($email_check == NULL){
       $email_exists = FALSE;
     } else{
       $email_exists = TRUE;

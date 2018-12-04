@@ -53,7 +53,7 @@
   <body>
     <?php include("common/header.php"); ?>
     <h1>Contact</h1>
-    <?php if (isset($msg)) echo "<strong class='msg' . $msgType . '>'. $msg . '</strong>" ?>
+    <?php if (isset($msg)) echo "<strong class=msg>".$msg."</strong>" ?>
     <form method="post" action="email.php">
       <input type='hidden' name='email' value=" <?php echo $_POST['email'] ?> ">
       <input type='hidden' name='name' value=" <?php echo $_POST['name'] ?> ">
