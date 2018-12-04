@@ -30,21 +30,32 @@
     //Ensure correct password entered
     $salt_stmt = $dbh->prepare('SELECT pass_salt FROM user WHERE user_id = :id');
     $salt_stmt->execute([':id' => $_SESSION['user_id']]);
+
     $res = $salt_stmt->fetch();
     $salt = ($res) ? $res['pass_salt'] : '';
     $salted = hash('sha256', $salt . $_POST['pass']);
+
     $verify_stmt = $dbh->prepare('SELECT user_id FROM user WHERE pass_hash = :pass');
     $verify_stmt->execute([':pass' => $salted]);
-    if ($_SESSION['user_id'] != $verify_stmt->fetch()) {
+
+    $test = $verify_stmt->fetch();
+    $test_res = ($test) ? $test['user_id'] : '';
+
+    if ($_SESSION['user_id'] != $test_res) {
       $msg = "Old password is incorrect";
     } else {
       // Generate random salt
-      $salt = hash('sha256', uniqid(mt_rand(), true));
+      $new_salt = hash('sha256', uniqid(mt_rand(), true));
       // Apply salt before hashing
-      $salted = hash('sha256', $salt . $_POST['pass']);
+      $new_salted = hash('sha256', $new_salt . $_POST['newpass']);
 
-      $stmt = $dbh->prepare("UPDATE user SET pass = :pass WHERE user_id = :id");
-      $stmt->execute(['pass' => $salted, 'id' => $_SESSION['user_id']]);
+      $stmt = $dbh->prepare("UPDATE user SET pass_hash = :pass WHERE user_id = :id");
+      $stmt->execute(['pass' => $new_salted, 'id' => $_SESSION['user_id']]);
+      
+      $stmt = $dbh->prepare("UPDATE user SET pass_salt = :salt WHERE user_id = :id");
+      $stmt->execute(['salt' => $new_salt, 'id' => $_SESSION['user_id']]);
+      
+      $msg = "Password changed successfully.";
     }
   }
 ?>
