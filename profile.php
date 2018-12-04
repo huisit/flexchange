@@ -57,6 +57,7 @@
     <?php include("common/header.php"); ?>
     <main>
       <h1>User Details</h1>
+      <p>Profile picture:</p>
       <?php
         $pictureLocation = "profilePictures/" . $_SESSION['user_id'] . ".png";
         if (!file_exists($pictureLocation)) {
