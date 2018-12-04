@@ -116,6 +116,10 @@ li {
   color: #DEC8C7;
 }
 
+.tiny {
+  font-size:.7em;
+}
+
 .wrapper {
   margin: 0 auto;
   width: 600px;
