@@ -103,7 +103,7 @@ li {
 }
 
 #container {
-  margin: auto;
+  margin: 0 auto;
   display: inline-block;
   padding-left: 150px;
 }
@@ -148,7 +148,26 @@ li {
   cursor: pointer;
 }
 
+.btn2 {
+  border: none;
+  padding: 1em;
+  font-weight: bold;
+  color: white;
+  margin-top: 20px;
+  margin-right: 5px;
+  border-radius: 3px;
+  background-color: #D83D3D;
+  opacity: 0.8;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
 .btn:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.btn2:hover {
   opacity: 1;
   cursor: pointer;
 }
@@ -235,4 +254,67 @@ input:focus {
   color: red;
   font-size: 11px;
   font-style: italic;
+}
+
+.form-radio
+{
+     -webkit-appearance: none;
+     -moz-appearance: none;
+     appearance: none;
+     display: inline-block;
+     position: relative;
+     background-color: #f1f1f1;
+     color: #666;
+     top: 12px;
+     height: 30px;
+     width: 30px;
+     border: 0;
+     border-radius: 50px;
+     cursor: pointer;
+     margin-right: 7px;
+     outline: none;
+}
+.form-radio:checked::before
+{
+     position: absolute;
+     font: 13px/1 'Open Sans', sans-serif;
+     left: 11px;
+     top: 7px;
+     content: '\02143';
+     transform: rotate(40deg);
+}
+.form-radio:hover
+{
+     background-color: #f7f7f7;
+}
+.form-radio:checked
+{
+     background-color: #f1f1f1;
+}
+
+
+/* dropdown menu */
+.styled-select {
+  margin-top: 20px;
+   height: 29px;
+   overflow: hidden;
+   width: 220px;
+   background-color: #fffae8;
+   color: #842D29;
+}
+
+.styled-select select {
+   background: transparent;
+   border: none;
+   font-size: 14px;
+   height: 29px;
+   padding: 5px; /* If you add too much padding here, the options won't show in IE */
+   width: 268px;
+   color: #842D29;
+}
+
+.semi-square {
+   -webkit-border-radius: 5px;
+   -moz-border-radius: 5px;
+   border-radius: 5px;
 }
