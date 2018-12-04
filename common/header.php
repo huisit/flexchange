@@ -28,7 +28,13 @@
     <div id="nav">
       <a href="index.php">Home</a>
       <a href="search.php"><img src="images/search.png" width="12px"> Find Flex</a>
-      <a href="logout.php" class="logout">Logout</a>
+      <?php
+        if (isset($_SESSION["user_id"])) {
+          echo "<a href='logout.php'>Logout</a>";
+        } else {
+          echo "<a href='login.php'>Login</a>";
+        }
+      ?>
     </div>
   </header>
 </html>

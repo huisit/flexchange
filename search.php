@@ -1,6 +1,6 @@
 <?php
   session_start();
-  require "backend/connect.php";
+  require_once "backend/connect.php";
 
   $params = array();
   if (isset($_POST['valueToSearch']) && $_POST['valueToSearch'] != ""){
@@ -11,7 +11,7 @@
   }
   if (isset($_SESSION["user_id"])) {
     $id = $_SESSION["user_id"];
-    $query .= "AND `user_id` != ?";
+    $query .= "AND NOT `user_id` = ?";
     array_push($params, $id);
   }
   $orderBy = array('FirstName', 'LastName', 'status', 'location', 'exchange_rate');
@@ -20,7 +20,6 @@
     $query .= " ORDER BY ".$order;
   }
   $stmt = $dbh->prepare($query);
-  print_r($stmt);
   if (empty($params)) {
     $stmt->execute();
   } else {
@@ -38,7 +37,7 @@
 
   <body>
     <?php include("common/header.php");?>
-    <main class="wrapper2">
+    <main>
       <form id="searchForm" action="search.php" method="post">
         <input id="searchText" type="text" name="valueToSearch" placeholder="Search Users" class="form-control2">
         <input id="searchSubmit" type="submit" name="search" value="Search" class="btn"><br/>
