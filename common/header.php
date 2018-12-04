@@ -2,9 +2,9 @@
   //Find the user's profile picture, if they're logged in
   if (isset($_SESSION["user_id"])) {
     require_once "backend/connect.php";
-    $stmt = $dbh->prepare("SELECT `img_name` FROM user WHERE user_id = :id");
-    $stmt->execute(['id' => $_SESSION["user_id"]]);
-    $profilePicture = $stmt->fetch()[0];
+    $pic_stmt = $dbh->prepare("SELECT `img_name` FROM user WHERE user_id = :id");
+    $pic_stmt->execute(['id' => $_SESSION["user_id"]]);
+    $profilePicture = $pic_stmt->fetch()[0];
     if (is_null($profilePicture) || $profilePicture == "") {
       $profilePicture = "default.png";
     }
