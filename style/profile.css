@@ -24,10 +24,7 @@
 }
 
 .mediaBox .mediaText {
-  float: left;
+  display: inline;
+  margin: 0;
   vertical-align: middle;
-}
-
-.contactMethod {
-  margin: 1em;
 }

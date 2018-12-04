@@ -11,11 +11,29 @@
           <title>" . $_SESSION['FirstName'] . " wants to FleXchange with you!</title>
         </head>
         <body>
+          <style>
+            .btn {
+              width: 200px;
+              border: none;
+              padding: 1em;
+              font-weight: bold;
+              color: white;
+              border-radius: 3px;
+              background-color: #D83D3D;
+              opacity: 0.8;
+              margin-bottom: 1em;
+            }
+
+            .btn:hover {
+              opacity: 1;
+              cursor: pointer;
+            }
+          </style>
           <h1>" . $_SESSION['FirstName'] . " wants to FleXchange with you!</h1>
           <p>Here are their details on how to find them:</p>
           <p>" . $_POST['details'] . "</p>
-          <button>Confirm meeting</button>
-          <button>Decline exchange</button>
+          <button class='btn'>Confirm meeting</button></br>
+          <button class='btn'>Decline exchange</button>
         </body>
       </html>
     ";

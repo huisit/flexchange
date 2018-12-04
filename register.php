@@ -10,17 +10,14 @@
     // @TODO: Check to see if duplicate emails exist
 
     //first check to see if we've already got that email
-    $email = $_POST['email'];
-
-    $prep = $dbh->prepare("SELECT * FROM user WHERE `email` = '$email'");
-    $prep->execute();
+    $prep = $dbh->prepare("SELECT * FROM user WHERE `email` = :email");
+    $prep->execute(['email' => $_POST['email']]);
     $check = $prep->fetch(PDO::FETCH_ASSOC);
 
     //if we haven't already got the email, set a bool to
     if (!$check){
       $email_exists = FALSE;
-    }
-    else{
+    } else{
       $email_exists = TRUE;
     }
 
@@ -55,7 +52,6 @@
   <title>Sign Up</title>
   <?php include("common/head.html"); ?>
   <link rel="stylesheet" href="style/register_style.css">
-
 </head>
 <body>
     <?php include("common/header.php"); ?>

@@ -3,50 +3,79 @@
   require_once "backend/connect.php"; //Connect to the database
 
   //Get the user's information to display
-  $stmt = $pdo->prepare("SELECT FirstName, LastName, email FROM user WHERE user_id = :id");
-  $stmt->execute(['id' => $id]);
-  $user = $stmt->fetch();
-  $name = $user["FirstName"] . $user["LastName"];
-  $email = $user["email"];
+  if (isset($_POST['firstname'])) {
+    $stmt = $dbh->prepare("UPDATE user SET FirstName = :firstname WHERE user_id = :id");
+    $stmt->execute(['firstname' => $_POST['firstname'], 'id' => $_SESSION['user_id']]);
+    $_SESSION['FirstName'] = $_POST['firstname'];
+  }
+  if (isset($_POST['lastname'])) {
+    $stmt = $dbh->prepare("UPDATE user SET LastName = :lastname WHERE user_id = :id");
+    $stmt->execute(['lastname' => $_POST['lastname'], 'id' => $_SESSION['user_id']]);
+    $_SESSION['LastName'] = $_POST['lastname'];
+  }
+  if (isset($_POST['email'])) {
+    //first check to see if we've already got that email
+    $prep = $dbh->prepare("SELECT * FROM user WHERE `email` = :email");
+    $prep->execute(['email' => $_POST['email']]);
+    $check = $prep->fetch(PDO::FETCH_ASSOC);
+    if ($check === TRUE){
+      $msg = "An account with that email already exists.";
+    } else {
+      $stmt = $dbh->prepare("UPDATE user SET email = :email WHERE user_id = :id");
+      $stmt->execute(['email' => $_POST['email'], 'id' => $_SESSION['user_id']]);
+      $_SESSION['email'] = $_POST['email'];
+    }
+  }
+  if (isset($_POST['pass'])) {
+    //Ensure correct password entered
+    $salt_stmt = $dbh->prepare('SELECT pass_salt FROM user WHERE user_id = :id');
+    $salt_stmt->execute([':id' => $_SESSION['user_id']]);
+    $res = $salt_stmt->fetch();
+    $salt = ($res) ? $res['pass_salt'] : '';
+    $salted = hash('sha256', $salt . $_POST['pass']);
+    $verify_stmt = $dbh->prepare('SELECT user_id FROM user WHERE pass_hash = :pass');
+    $verify_stmt->execute([':pass' => $salted]);
+    if ($_SESSION['user_id'] != $verify_stmt->fetch()) {
+      $msg = "Old password is incorrect";
+    } else {
+      // Generate random salt
+      $salt = hash('sha256', uniqid(mt_rand(), true));
+      // Apply salt before hashing
+      $salted = hash('sha256', $salt . $_POST['pass']);
+
+      $stmt = $dbh->prepare("UPDATE user SET pass = :pass WHERE user_id = :id");
+      $stmt->execute(['pass' => $salted, 'id' => $_SESSION['user_id']]);
+    }
+  }
 ?>
 
 <html>
   <head>
     <?php include("common/head.html") ?>
-    <link rel="stylesheet" type="text/css" href="profile.css"></link>
   </head>
   <body>
     <?php include("common/header.php"); ?>
-    <div class="vcard">
-      <header class="mediaBox">
-        <div class="profilePicture mediaPicture">
-          <?php
-            $pictureLocation = "/profilePictures/" . $id . ".png";
-            if (!file_exists($pictureLocation)) {
-              $pictureLocation = "/profilePictures/default.png";
-            }
-            echo "<img class='photo circleFrame' src='" . $pictureLocation . "' width='80'></img>";
-          ?>
-          <img class="editOverlay circleFrame" src="overlay.png" width="80" alt="Click to change profile picture"></img>
-          <form action="uploadPicture.php" method="post">
-            <input type="file" id="uploadPicture" name="profilePicture" accept="image/*" style="display: none;"></input>
-          </form>
-        </div>
-        <h1 class="fn mediaText"><?php echo $name ?></h1>
-      </header>
-      <section class="contact">
-        <h2>User Details</h2>
-        <div class="contactMethod mediaBox"><object class="icon mediaPicture" type="image/svg+xml" data="close-envelope.svg" height="30">Email</object><p class="email mediaText"><?php echo $email?></p></div>
-        <button id="editContact">Edit Info</button>
-      </section>
-    </div>
-    <script>
-      //Allows the user to change their profile picture by clicking on it
-      $(document).ready(function() {
-        $(".editOverlay").click(function() {
-          $("input[id='my_file']").click();
-        });
-      });
-    </script>
+    <main>
+      <h1>User Details</h1>
+      <?php
+        $pictureLocation = "profilePictures/" . $_SESSION['user_id'] . ".png";
+        if (!file_exists($pictureLocation)) {
+          $pictureLocation = "profilePictures/default.png";
+        }
+        echo "<img class='photo circleFrame mediaPicture' src='" . $pictureLocation . "' width='100'></img>";
+      ?>
+      <form action="uploadPicture.php" method="post" enctype="multipart/form-data">
+        <input type="file" name="profilePicture" accept="image/*" onchange="form.submit()"></input>
+      </form>
+      <?php if (isset($msg)) echo "<strong>$msg</strong>" ?>
+      <form method="post" action="profile.php">
+        <label for="firstname">First Name: </label><input type="text" name="firstname" value="<?php echo $_SESSION['FirstName']; ?>"/>
+        <label for="lastname">Last Name: </label><input type="text" name="lastname" value="<?php echo $_SESSION['LastName']; ?>"/>
+        <label for="email">RPI Email: </label><input type="text" name="email" value="<?php echo $_SESSION['email']; ?>"/>
+        <label for="pass">Old Password: </label><input type="password" name="pass" />
+        <label for="passconfirm">New Password: </label><input type="password" name="newpass" />
+        <input type="submit" name="update" value="Update Information" />
+      </form>
+    </main>
   </body>
 </html>

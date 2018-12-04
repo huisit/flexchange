@@ -1,12 +1,13 @@
 <?php
   //Find the user's profile picture, if they're logged in
-  if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true) {
+  if (isset($_SESSION["user_id"])) {
     require_once "backend/connect.php";
     $stmt = $dbh->prepare("SELECT `img_name` FROM user WHERE user_id = :id");
-    $id = $_SESSION["id"];
-    $stmt->execute($id);
+    $stmt->execute(['id' => $_SESSION["user_id"]]);
     $profilePicture = $stmt->fetch();
-    if (is_null($profilePicture)) {
+    print_r($profilePicture);
+    $profilePicture = $profilePicture[0];
+    if (is_null($profilePicture) || $profilePicture == "") {
       $profilePicture = "default.png";
     }
   } else {
@@ -17,7 +18,7 @@
 <html>
   <head>
     <link rel="stylesheet" type="text/css" href="style/header.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>   
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   </head>
   <header>
     <!-- Logo and profile -->

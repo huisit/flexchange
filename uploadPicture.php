@@ -1,17 +1,19 @@
-  <?php
-  session_start();
+<?php
+  require_once "backend/ensureSession.php"; //Ensure the user is logged in
+  require_once "backend/connect.php"; //Connect to the database
+
   //check if user is logged in, if not redirect to login
-  if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] == false) {
+  if (!isset($_SESSION["user_id"])) {
     header("location: login.php");
-    exit;
   }
 
   //get image data
-  $uploadSize = $_FILES["uploadFile"]["size"];
-  $fileType = strtolower(pathinfo(basename($_FILES["uploadFile"]["name"]), PATHINFO_EXTENSION));
+  $uploadSize = $_FILES["profilePicture"]["size"];
+  $fileType = strtolower(pathinfo(basename($_FILES["profilePicture"]["name"]), PATHINFO_EXTENSION));
 
   //define upload vars
-  $target = "/profilePictures/" . $_SESSION["id"] . "." . $fileType;
+  $fileName = $_SESSION["user_id"] . "." . $fileType;
+  $target = "profilePictures/" . $fileName;
   $canUpload = true;
 
   // //check server disk space
@@ -35,8 +37,11 @@
 
   //if everything works try to upload
   if ($canUpload) {
-    if (move_uploaded_file($_FILES["uploadFile"]["tmp_name"], $target)) {
+    if (move_uploaded_file($_FILES["profilePicture"]["tmp_name"], $target)) {
       echo "The picture has been uploaded";
+      $stmt = $dbh->prepare("UPDATE user SET img_name = :img_name WHERE user_id = :id");
+      $stmt->execute(['img_name' => $fileName, 'id' => $_SESSION['user_id']]);
+      header("Location: profile.php");
     } else {
       echo 'Error: ', PHP_EOL;
       print_r(error_get_last());
