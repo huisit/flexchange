@@ -54,13 +54,17 @@
     <?php include("common/header.php"); ?>
     <h1>Contact</h1>
     <?php if (isset($msg)) echo "<strong class='msg' . $msgType . '>'. $msg . '</strong>" ?>
-    <form method="post" action="email.php">
-      <input type='hidden' name='email' value=" <?php echo $_POST['email'] ?> ">
-      <input type='hidden' name='name' value=" <?php echo $_POST['name'] ?> ">
-      <label for="details">Provide details for <?php echo $_POST['name'] ?> to find you: </label><input type="text" name="details" />
-      <input name="mail" type="submit" value="Send" />
-    </form>
-    <p>Note: your first name and profile picture will be sent to them</p>
-    <br />
+    <main>
+      <form method="post" action="email.php">
+        <input type='hidden' name='email' value=" <?php echo $_POST['email'] ?> ">
+        <input type='hidden' name='name' value=" <?php echo $_POST['name'] ?> ">
+        <label for="details">Provide your email or phone number for <?php echo $_POST['name'] ?> to contact you: </label><input type="text" name="details" class="form-control"/>
+        <br>
+        <input name="mail" type="submit" value="Send" class="btn"/>
+        <br>
+      </form>
+      <p style="font-size:.7em">Note: your first name and profile picture will be sent to them</p>
+      <br />
+    </main>
   </body>
 </html>

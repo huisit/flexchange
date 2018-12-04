@@ -118,14 +118,16 @@
             <form action="index.php" method="post" id="statusForm">
                 <input type="radio" name="status" value="flex" class="form-radio">FLEXING
                 <input type="radio" name="status" value="offline" class="form-radio">OFFLINE
+                <br>
                 <input type="submit" name="sub_status" value="Update Status" class="btn2">
             </form>
         </div>
         <div id="rate">
-          <h2>Transfer Rate</h2>
+          <h2>Transfer Rate - USD to FLEX</h2>
             <!--CHOOSE EXCHANGE RATE-->
+            <br>
             <form action="index.php" method="post" id="statusForm">
-              <label for="exchangerate">$USD to FLEX</label><input type="text" name="exchangerate" class="form-control" placeholder="ex. $0.50 / 1 FLEX">
+              <input type="text" name="exchangerate" class="form-control" placeholder="ex. $0.50 USD per $1 FLEX">
               <input type="submit" name="sub_exchangerate" value="Update Exchange Rate" class="btn2">
             </form>
         </div>
