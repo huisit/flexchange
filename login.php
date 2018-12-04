@@ -10,7 +10,7 @@ if (isset($_SESSION['email'])) {
 }
 
 // Check login
-if (isset($_POST['login']) && $_POST['login'] == 'Login') {
+if (isset($_POST['login']) && $_POST['login'] == 'LOGIN') {
 
   $salt_stmt = $dbh->prepare('SELECT pass_salt FROM user WHERE email=:email');
   $salt_stmt->execute(array(':email' => $_POST['email']));
@@ -44,21 +44,34 @@ if (isset($_POST['login']) && $_POST['login'] == 'Login') {
   <?php
     include("common/head.html");
   ?>
-  <link rel="stylesheet" type="text/css" href="register_style.css">
+  <link rel="stylesheet" type="text/css" href="style/login.css">
 </head>
 <body>
   <?php include("common/header.php"); ?>
-  <h1>Login</h1>
+  <div class="wrapper">
+  <h1>Login to FleXchange</h1>
+    
   <?php if (isset($err)) echo "<p>$err</p>" ?>
   <form method="post" action="login.php">
-    <label for="email">RPI Email: </label><input type="text" name="email" />
-    <label for="pass">Password: </label><input type="password" name="pass" />
-    <input name="login" type="submit" value="Login" />
+    
+    <div class="formgroup">
+      <label for="email" class="_label">RPI Email </label>
+      <input type="text" name="email" class="form-control" />
+    </div>
+    
+    <div class="formgroup">
+      <label for="pass" class="_label">Password</label>
+      <input type="password" name="pass" class="form-control"/>
+    </div>
+    
+     <input name="login" type="submit" value="LOGIN" class="btn"/>
   </form>
   <p>Don't have an account? <a href="register.php">Sign up now</a></p>
+  
+  
+  
 </body>
     <script
     src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="lab9.js"></script>
 
 </html>

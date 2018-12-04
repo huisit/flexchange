@@ -36,12 +36,12 @@ section {
 }
 
 h1, h2, h3 {
-  font-family: "Open Sans", bold, sans-serif;
+  font-family: "Roboto", bold, sans-serif;
   font-weight: bolder;
 }
 
 p, li, ul, br {
-  font-family: "Raleway", sans-serif;
+  font-family: "Robot", sans-serif;
 }
 
 h1 {
@@ -60,13 +60,27 @@ h2 {
 a {
   font-weight: bold;
   color: #842D29;
-  font-family: Raleway;
+  font-family: 'Roboto';
+  text-decoration: none;
+}
+
+a.nav {
+  font-weight: normal;
+  color: #842D29;
+  font-family: 'Roboto';
+  text-decoration: none;
+}
+
+a.logout {
+  font-weight: normal;
+  color: #842D29;
+  font-family: 'Roboto';
   text-decoration: none;
 }
 
 a:hover {
   color: #a64b47;
-  background-color: #EDD094;
+  cursor: pointer;
 }
 
 label {
@@ -102,6 +116,22 @@ li {
   color: #DEC8C7;
 }
 
+.wrapper {
+  margin: 0 auto;
+  width: 600px;
+  padding-top: 15px;
+  padding-left: 15px;
+}
+
+.wrapper2 {
+  float: left;
+  margin-left: 10px;
+  margin-top: 10px;
+  width: 1000px;
+  padding-top: 15px;
+  padding-left: 15px;
+}
+
 .btn {
   border: none;
   padding: 1em;
@@ -112,6 +142,7 @@ li {
   background-color: #D83D3D;
   opacity: 0.8;
   transition: 0.2s;
+  cursor: pointer;
 }
 
 .btn:hover {
@@ -169,7 +200,7 @@ li {
 
 .form-control {
   display: block;
-  width: 100%;
+  width: 90%;
   height: 34px;
   padding: 4px 10px;
   font-size: 14px;
@@ -182,10 +213,11 @@ li {
 }
 
 ._label {
-  font-weight: bold;
+  font-weight: 700;
   font-size: 1em;
   text-transform: uppercase;
   color: #c6a7a5;
+  font-family: 'Roboto', sans-serif;
 }
 
 .form-group {
