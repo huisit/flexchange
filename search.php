@@ -18,7 +18,6 @@
     $order = $_GET['orderBy'];
     $query .= " ORDER BY ".$order;
   }
-  print_r($query);
   $stmt = $dbh->prepare($query);
   if (empty($params)) {
     $stmt->execute();
