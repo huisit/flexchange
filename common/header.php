@@ -4,9 +4,7 @@
     require_once "backend/connect.php";
     $stmt = $dbh->prepare("SELECT `img_name` FROM user WHERE user_id = :id");
     $stmt->execute(['id' => $_SESSION["user_id"]]);
-    $profilePicture = $stmt->fetch();
-    print_r($profilePicture);
-    $profilePicture = $profilePicture[0];
+    $profilePicture = $stmt->fetch()[0];
     if (is_null($profilePicture) || $profilePicture == "") {
       $profilePicture = "default.png";
     }

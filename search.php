@@ -1,19 +1,18 @@
 <?php
   session_start();
-
   require "backend/connect.php";
 
-  $valueToSearch = null;
-  if (isset($_POST['search']) && $_POST['valueToSearch'] != ""){
-    $valueToSearch = $_POST['valueToSearch'];
-    $query = "SELECT `FirstName`, `LastName`, `status`, `location`, `exchange_rate`, `email` FROM user WHERE CONCAT(`FirstName`, `LastName`, `status`, `location`) LIKE '%:value%'";
+  $params = array();
+  if (isset($_POST['valueToSearch']) && $_POST['valueToSearch'] != ""){
+    $query = "SELECT `FirstName`, `LastName`, `status`, `location`, `exchange_rate`, `email` FROM user WHERE CONCAT(`FirstName`, `LastName`, `status`, `location`) LIKE '%?%'";
+    array_push($params, $_POST['valueToSearch']);
   } else {
     $query = "SELECT `FirstName`, `LastName`, `status`, `location`, `exchange_rate`, `email` FROM user";
   }
-  $id = null;
-  if (!isset($_SESSION["user_id"])) {
+  if (isset($_SESSION["user_id"])) {
     $id = $_SESSION["user_id"];
-    $query .= "AND NOT `id` = :id";
+    $query .= "AND `user_id` != ?";
+    array_push($params, $id);
   }
   $orderBy = array('FirstName', 'LastName', 'status', 'location', 'exchange_rate');
   if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
@@ -21,31 +20,29 @@
     $query .= " ORDER BY ".$order;
   }
   $stmt = $dbh->prepare($query);
-  $stmt->execute(['value' => $valueToSearch, 'id' => $id]);
+  print_r($stmt);
+  if (empty($params)) {
+    $stmt->execute();
+  } else {
+    $stmt->execute($params);
+  }
 ?>
 
 <!DOCTYPE html>
 <html>
   <head>
     <title>Search</title>
-    <?php
-      include("common/head.html");
-    ?>
+    <?php include("common/head.html"); ?>
     <link rel="stylesheet" type="text/css" href="style/search.css">
   </head>
 
   <body>
-    <?php
-      include("common/header.php");
-    ?>
-
-      <div class="wrapper2">
-
+    <?php include("common/header.php");?>
+    <main class="wrapper2">
       <form id="searchForm" action="search.php" method="post">
         <input id="searchText" type="text" name="valueToSearch" placeholder="Search Users" class="form-control2">
         <input id="searchSubmit" type="submit" name="search" value="Search" class="btn"><br/>
       </form>
-
       <?php
         if ($stmt->rowCount() > 0) {
           echo "
@@ -92,6 +89,6 @@
           echo "<h1>No Results</h1>";
         }
       ?>
-    </div>
+    </main>
   </body>
 </html>
