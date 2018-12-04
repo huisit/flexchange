@@ -2,30 +2,22 @@
   session_start();
   require_once "backend/connect.php";
 
-  //$params = array();
   if (isset($_POST['valueToSearch']) && $_POST['valueToSearch'] != ""){
     $query = 'SELECT `FirstName`, `LastName`, `status`, `location`, `exchange_rate`, `email` FROM `user` WHERE CONCAT(`FirstName`, `LastName`, `status`, `location`) LIKE "%'.$_POST['valueToSearch'].'%"';
-    //array_push($params, $_POST['valueToSearch']);
   } else {
     $query = "SELECT `FirstName`, `LastName`, `status`, `location`, `exchange_rate`, `email` FROM `user` WHERE 1";
   }
-  if (isset($_SESSION["user_id"])) {
-    $query .= " AND `user_id` !=".$_SESSION['user_id'];
-   // array_push($params, $_SESSION['user_id']);
-  }
+  // if (isset($_SESSION["user_id"])) {
+  //   $query .= " AND `user_id` !=".$_SESSION['user_id'];
+
+  // }
   $orderBy = array('FirstName', 'LastName', 'status', 'location', 'exchange_rate');
   if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $orderBy)) {
     $order = $_GET['orderBy'];
     $query .= " ORDER BY ".$order;
   }
   $stmt = $dbh->prepare($query);
-  print_r($stmt);
   $stmt->execute();
-  // if (empty($params)) {
-  //   $stmt->execute();
-  // } else {
-  //   $stmt->execute($params);
-  // }
 ?>
 
 <!DOCTYPE html>
