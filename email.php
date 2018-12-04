@@ -38,7 +38,7 @@
       </html>
     ";
     $headers = "MIME-Version: 1.0\r\nContent-type: text/html; charset=iso8859-1\r\n";
-    $headers .= "From: FleXchange No-Reply <flexchange.noreply@gmail.com>\r\n";
+    $headers .= "From: FleXchange No-Reply <flexchange.noreply@flexchange.com>\r\n";
     mail($_POST['email'], $subject, $message, $headers);
     // header("Location: search.php");
     $msg = "Email sent! You will recieve an email when they confirm or decline.";
