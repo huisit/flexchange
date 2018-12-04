@@ -65,17 +65,19 @@
         }
         echo "<img class='photo circleFrame mediaPicture' src='" . $pictureLocation . "' width='100'></img>";
       ?>
+      <br>
       <form action="uploadPicture.php" method="post" enctype="multipart/form-data">
         <input type="file" name="profilePicture" accept="image/*" onchange="form.submit()"></input>
       </form>
       <?php if (isset($msg)) echo "<strong>$msg</strong>" ?>
       <form method="post" action="profile.php">
-        <label for="firstname">First Name: </label><input type="text" name="firstname" value="<?php echo $_SESSION['FirstName']; ?>"/>
-        <label for="lastname">Last Name: </label><input type="text" name="lastname" value="<?php echo $_SESSION['LastName']; ?>"/>
-        <label for="email">RPI Email: </label><input type="text" name="email" value="<?php echo $_SESSION['email']; ?>"/>
-        <label for="pass">Old Password: </label><input type="password" name="pass" />
-        <label for="passconfirm">New Password: </label><input type="password" name="newpass" />
-        <input type="submit" name="update" value="Update Information" />
+        <label for="firstname">First Name: </label><input type="text" name="firstname" class="form-control" value="<?php echo $_SESSION['FirstName']; ?>"/>
+        <label for="lastname">Last Name: </label><input type="text" name="lastname" class="form-control" value="<?php echo $_SESSION['LastName']; ?>"/>
+        <label for="email">RPI Email: </label><input type="text" name="email" class="form-control" value="<?php echo $_SESSION['email']; ?>"/>
+        <label for="pass">Old Password: </label><input type="password" name="pass" class="form-control" />
+        <label for="passconfirm">New Password: </label><input type="password" name="newpass" class="form-control" />
+        <br>
+        <input type="submit" name="update" value="Update Information" class="btn"/>
       </form>
     </main>
   </body>
