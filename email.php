@@ -40,30 +40,27 @@
     $headers = "MIME-Version: 1.0\r\nContent-type: text/html; charset=iso8859-1\r\n";
     $headers .= "From: FleXchange No-Reply <flexchange.noreply@gmail.com>\r\n";
     mail($_POST['email'], $subject, $message, $headers);
-    header("Location: search.php");
+    // header("Location: search.php");
+    $msg = "Email sent! You will recieve an email when they confirm or decline.";
   }
 ?>
 <!doctype html>
 <html>
-<head>
-  <title>Login</title>
-  <link rel="shortcut icon" href="">
-  <?php include("common/head.html"); ?>
-</head>
-<body>
-  <?php include("common/header.php"); ?>
-  <h1>Contact</h1>
-  <form method="post" action="email.php">
-    <input type='hidden' name='email' value=" <?php echo $_POST['email'] ?> ">
-    <input type='hidden' name='name' value=" <?php echo $_POST['name'] ?> ">
-    <label for="details">Provide details for <?php echo $_POST['name'] ?> to find you: </label><input type="text" name="details" />
-    <input name="mail" type="submit" value="Send" />
-  </form>
-  <p>Note: your first name and profile picture will be sent to them</p>
-  <br />
-</body>
-    <script
-    src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="lab9.js"></script>
-
+  <head>
+    <title>Contact</title>
+    <?php include("common/head.html"); ?>
+  </head>
+  <body>
+    <?php include("common/header.php"); ?>
+    <h1>Contact</h1>
+    <?php if (isset($msg)) echo "<strong class='msg' . $msgType . '>'. $msg . '</strong>" ?>
+    <form method="post" action="email.php">
+      <input type='hidden' name='email' value=" <?php echo $_POST['email'] ?> ">
+      <input type='hidden' name='name' value=" <?php echo $_POST['name'] ?> ">
+      <label for="details">Provide details for <?php echo $_POST['name'] ?> to find you: </label><input type="text" name="details" />
+      <input name="mail" type="submit" value="Send" />
+    </form>
+    <p>Note: your first name and profile picture will be sent to them</p>
+    <br />
+  </body>
 </html>
