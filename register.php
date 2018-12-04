@@ -15,7 +15,7 @@
     $check = $prep->fetch(PDO::FETCH_ASSOC);
 
     //if we haven't already got the email, set a bool to
-    if (!$check){
+    if ($check != null){
       $email_exists = FALSE;
     } else{
       $email_exists = TRUE;
@@ -43,6 +43,7 @@
       $stmt = $dbh->prepare("INSERT INTO user (email, pass_hash, pass_salt, FirstName, LastName) VALUES (:email, :pass, :salt, :firstname, :lastname)");
       $stmt->execute(array(':email' => $_POST['email'], ':pass' => $salted, ':salt' => $salt, ':firstname'=>$_POST['firstname'], ':lastname'=>$_POST['lastname']));
       $msg = "Account created.";
+      header("Location: index.php");
     }
   }
 ?>

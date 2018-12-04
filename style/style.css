@@ -123,6 +123,18 @@ li {
   padding-left: 15px;
 }
 
+.msg {
+  padding: 0.5em;
+}
+
+.msg .success {
+  background-color: #50b645;
+}
+
+.msg .failure {
+  background-color: #b64545;
+}
+
 .btn {
   border: none;
   padding: 1em;

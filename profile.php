@@ -3,22 +3,22 @@
   require_once "backend/connect.php"; //Connect to the database
 
   //Get the user's information to display
-  if (isset($_POST['firstname'])) {
+  if (isset($_POST['firstname']) && $_POST['firstname'] != "") {
     $stmt = $dbh->prepare("UPDATE user SET FirstName = :firstname WHERE user_id = :id");
     $stmt->execute(['firstname' => $_POST['firstname'], 'id' => $_SESSION['user_id']]);
     $_SESSION['FirstName'] = $_POST['firstname'];
   }
-  if (isset($_POST['lastname'])) {
+  if (isset($_POST['lastname']) && $_POST['lastname'] != "") {
     $stmt = $dbh->prepare("UPDATE user SET LastName = :lastname WHERE user_id = :id");
     $stmt->execute(['lastname' => $_POST['lastname'], 'id' => $_SESSION['user_id']]);
     $_SESSION['LastName'] = $_POST['lastname'];
   }
-  if (isset($_POST['email'])) {
+  if (isset($_POST['email']) && $_POST['email'] != "") {
     //first check to see if we've already got that email
     $prep = $dbh->prepare("SELECT * FROM user WHERE `email` = :email");
     $prep->execute(['email' => $_POST['email']]);
     $check = $prep->fetch(PDO::FETCH_ASSOC);
-    if ($check === TRUE){
+    if ($check != null) {
       $msg = "An account with that email already exists.";
     } else {
       $stmt = $dbh->prepare("UPDATE user SET email = :email WHERE user_id = :id");
@@ -26,7 +26,7 @@
       $_SESSION['email'] = $_POST['email'];
     }
   }
-  if (isset($_POST['pass'])) {
+  if (isset($_POST['newpass']) && $_POST['newpass'] != "") {
     //Ensure correct password entered
     $salt_stmt = $dbh->prepare('SELECT pass_salt FROM user WHERE user_id = :id');
     $salt_stmt->execute([':id' => $_SESSION['user_id']]);
