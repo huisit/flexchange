@@ -70,7 +70,12 @@
       <h1>User Details</h1>
       <p>Profile picture:</p>
       <?php
-        $pictureLocation = "profilePictures/" . $_SESSION['user_id'] . ".png";
+        $get_pic = $dbh->prepare("SELECT img_name FROM user WHERE user_id = :id");
+        $get_pic->execute(['id' => $_SESSION['user_id']]);
+        $pic_res = $get_pic->fetch();
+        $pic_res = ($pic_res) ? $pic_res['img_name']: '';
+        $pictureLocation = "profilePictures/" . $pic_res;
+        
         if (!file_exists($pictureLocation)) {
           $pictureLocation = "profilePictures/default.png";
         }
@@ -78,7 +83,7 @@
       ?>
       <br>
       <form action="uploadPicture.php" method="post" enctype="multipart/form-data">
-        <input type="file" name="profilePicture" accept="image/*" onchange="form.submit()"></input>
+        <input type="file" name="profilePicture" accept="image/*" onchange="form.submit()"/>
       </form>
       <?php if (isset($msg)) echo "<strong>$msg</strong>" ?>
       <form method="post" action="profile.php">
