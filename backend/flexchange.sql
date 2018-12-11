@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 28, 2018 at 01:02 AM
+-- Generation Time: Dec 11, 2018 at 02:56 AM
 -- Server version: 10.1.35-MariaDB
 -- PHP Version: 7.2.9
 
@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `flexchange`
 --
+CREATE DATABASE IF NOT EXISTS `flexchange` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `flexchange`;
 
 -- --------------------------------------------------------
 
@@ -33,7 +35,7 @@ CREATE TABLE `user` (
   `FirstName` varchar(64) CHARACTER SET utf32 NOT NULL,
   `LastName` varchar(64) CHARACTER SET utf32 NOT NULL,
   `email` varchar(64) CHARACTER SET utf32 NOT NULL,
-  `status` int(10) UNSIGNED NOT NULL,
+  `status` int(10) UNSIGNED NOT NULL DEFAULT '1',
   `pass_hash` varchar(64) CHARACTER SET utf32 NOT NULL,
   `pass_salt` varchar(64) CHARACTER SET utf32 NOT NULL,
   `venmo_handle` varchar(17) CHARACTER SET utf32 NOT NULL,
@@ -47,10 +49,10 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `FirstName`, `LastName`, `email`, `status`, `pass_hash`, `pass_salt`, `venmo_handle`, `location`, `exchange_rate`, `img_name`) VALUES
-(1, 'Steve', 'Bloniarz', 'steve.bloniarz@gmail.com', 1, 'passhash', 'stevesalt', 'realshenanigans', 'Blitman Dining Hall', 0.5, ''),
-(2, 'Rex', 'Hu', 'rex.hu555@gmail.com', 1, 'passhash', 'rexsalt', 'rex-hu', '', 0, ''),
-(3, 'Natalee', 'Ryan', '98natalee@gmail.com', 0, 'passhash', 'nataleesalt', 'natalee-ryan', '', 0, ''),
-(4, 'Maya', 'Tung', 'mktung0@gmail.com', 2, 'passhash', 'mayasalt', 'maya-tung', '', 0, '');
+(11, 'John', 'Smith', 'smithj@rpi.edu', 0, '3c4b6b58ede177852631f7301f7fe4b21b482c356034cdaea58f11f409e303b7', 'ff6c0522fcf53dc926eff7448d6b808200466b97a75fdf5f61912b1bef5a6b88', '', 'Moes', 0.6, ''),
+(21, 'Steven', 'Bloniarz', 'steve.bloniarz@gmail.com', 0, '4d04c01f05318454387c04e0727fac3137f0d99eaf7893dbc7705681ef805b71', '60bb077fd39f2a8db8ecd9383f78765d0d1f16d3d071b5fc7580ff699a817bf2', '', 'EMPAC', 0.5, '21.png'),
+(22, 'Salty', 'Boi', 'bois@rpi.edu', 0, '385673d7d4f99cded6a2cbb5683bfc6a4e41f9aa44e4da6d4ff32078489b7288', 'c94ecc5233397d8477c602ec17e965c48ef13d32fe922cd43ab8173157d8a2d8', '', 'Blitman', 0.25, '22.jpeg'),
+(24, 'Satej', 'Sawant', 'sawans@rpi.edu', 1, '1c957c78cb218b6ce32cbf37140dba4f3fe7f58469d1207df8262c4b977c4916', '2dfbc0e88b2be2401eeedadee4083285733bb2633897bbd833d7f1de0fb7212e', '', '', 0, '');
 
 --
 -- Indexes for dumped tables
@@ -70,7 +72,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
